@@ -1,7 +1,12 @@
 {
   "name": "collections-client",
   "version": "0.1.0",
+  "main": "App.js",
   "private": true,
+  "engines": {
+    "npm": "6.13.6",
+    "node": "13.8.0"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
