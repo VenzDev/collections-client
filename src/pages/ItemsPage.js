@@ -29,6 +29,22 @@ const ItemsPage = () => {
       </Pagination.Item>
     );
   }
+  const handleItems5 = () => setItemsPerPage(5);
+  const handleItems10 = () => setItemsPerPage(10);
+  const handleItems20 = () => setItemsPerPage(20);
+
+  const sort = (e) => {
+    let _items = items;
+    _items.sort((a, b) => {
+      var keyA = a[e.target.text];
+      var keyB = b[e.target.text];
+
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
+    dispatch(collectionItems.changeData(_items));
+  };
 
   useEffect(() => {
     dispatch(collectionItems.fetchData());
@@ -42,7 +58,35 @@ const ItemsPage = () => {
     <div>loading</div>
   ) : (
     <Container style={{ marginTop: "50px" }}>
-      <Pagination>{navItems}</Pagination>
+      <div style={{ display: "flex" }}>
+        <Pagination>{navItems}</Pagination>
+        <h5 style={{ left: "30%", position: "absolute" }}>
+          Items per page
+          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
+            {" "}
+            5{" "}
+          </span>
+          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems10}>
+            {" "}
+            10{" "}
+          </span>
+          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems20}>
+            {" "}
+            20{" "}
+          </span>
+        </h5>
+      </div>
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Sort By
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu onClick={sort}>
+          <Dropdown.Item>name</Dropdown.Item>
+          <Dropdown.Item>Another action</Dropdown.Item>
+          <Dropdown.Item>Something else</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
       {currentItems.map((item) => (
         <Card key={item.id} style={{ width: "100%" }}>
           <Card.Body style={{ display: "flex" }}>
