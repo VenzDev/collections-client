@@ -1,44 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Card, Button, Pagination, Dropdown } from "react-bootstrap";
 import collect from "../collect.svg";
 import { Link } from "react-router-dom";
-import itemsJson from "../utils/items.json";
+import { useSelector, useDispatch } from "react-redux";
+import { collectionItems } from "../redux/collectionItem";
 
 const ItemsPage = () => {
-  let items = [];
+  let navItems = [];
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
-  let indexOfLastPost = currentPage * postsPerPage;
-  let indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const [posts, setPosts] = useState(itemsJson.items);
-  const [currentPosts, setCurrentPosts] = useState(posts.slice(indexOfFirstPost, indexOfLastPost));
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const dispatch = useDispatch();
+  const { items, loading } = useSelector((state) => state.collectionItemsReducer);
 
-  //Get current posts
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
-  // let currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  indexOfLastPost = currentPage * postsPerPage;
-  indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-  const handleClick = (number) => {
-    setCurrentPage(number);
-  };
-  const handleItems5 = () => {
-    setPostsPerPage(5);
-    indexOfLastPost = currentPage * postsPerPage;
-    indexOfFirstPost = indexOfLastPost - postsPerPage;
-    setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
-  };
-  const handleItems10 = () => {
-    setPostsPerPage(10);
-    indexOfLastPost = currentPage * postsPerPage;
-    indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-    setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
-  };
-  const handleItems20 = () => setPostsPerPage(20);
-
-  for (let number = 1; number <= Math.ceil(posts.length / postsPerPage); number++) {
-    items.push(
+  for (let number = 1; number <= Math.ceil(items.length / itemsPerPage); number++) {
+    navItems.push(
       <Pagination.Item
         onClick={() => {
           handleClick(number);
@@ -50,54 +29,21 @@ const ItemsPage = () => {
       </Pagination.Item>
     );
   }
-  console.log(currentPosts);
 
-  const sort = (e) => {
-    let list = posts;
-    list.sort((a, b) => {
-      var keyA = a[e.target.text];
-      var keyB = b[e.target.text];
+  useEffect(() => {
+    dispatch(collectionItems.fetchData());
+  }, [dispatch]);
 
-      if (keyA < keyB) return -1;
-      if (keyA > keyB) return 1;
-      return 0;
-    });
-    setPosts(list);
-    setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
+  const handleClick = (number) => {
+    setCurrentPage(number);
   };
-  return (
+
+  return loading ? (
+    <div>loading</div>
+  ) : (
     <Container style={{ marginTop: "50px" }}>
-      <div style={{ display: "flex" }}>
-        <Pagination>{items}</Pagination>
-        <h5 style={{ left: "30%", position: "absolute" }}>
-          Items per page
-          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
-            {" "}
-            5{" "}
-          </span>
-          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems10}>
-            {" "}
-            10{" "}
-          </span>
-          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems20}>
-            {" "}
-            20{" "}
-          </span>
-        </h5>
-      </div>
-      <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Sort By
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu onClick={sort}>
-          <Dropdown.Item>name</Dropdown.Item>
-          <Dropdown.Item>Another action</Dropdown.Item>
-          <Dropdown.Item>Something else</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-
-      {currentPosts.map((item) => (
+      <Pagination>{navItems}</Pagination>
+      {currentItems.map((item) => (
         <Card key={item.id} style={{ width: "100%" }}>
           <Card.Body style={{ display: "flex" }}>
             <div style={{ paddingRight: "50px" }}>
