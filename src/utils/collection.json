@@ -1,0 +1,32 @@
+{
+  "collections": [
+    {
+      "id": "12312312",
+      "name": "books",
+      "collectionItems": 10,
+      "description": "My great collection of books (only 90s) and fantasty",
+      "attributes": ["year", "size", "opinion", "author"]
+    },
+    {
+      "id": "23412142",
+      "name": "shoes",
+      "collectionItems": 10,
+      "description": "My great collection of shoes (only 90s) and fantasty",
+      "attributes": ["year", "size", "opinion", "brand"]
+    },
+    {
+      "id": "12312444",
+      "name": "stamps",
+      "collectionItems": 33,
+      "description": "My great collection of books (only 90s) and fantasty",
+      "attributes": ["year", "size", "opinion", "author"]
+    },
+    {
+      "id": "1231231245",
+      "name": "books",
+      "collectionItems": 10,
+      "description": "My great collection of books (only 90s) and fantasty",
+      "attributes": ["year", "size", "opinion", "author"]
+    }
+  ]
+}
