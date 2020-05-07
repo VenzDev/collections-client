@@ -19,11 +19,12 @@ const CollectionCard = ({ collection }) => {
             <Card.Text>{collection.description}</Card.Text>
           </Link>
           <div style={{ marginTop: "10px" }}>
-            <Button href={`/addItem/${collection.name}`} variant="success">
+            <Button as={Link} to={`/addItem/${collection.id}`} variant="success">
               Add Item
             </Button>
             <Button
-              href={`/edit/${collection.name}`}
+              as={Link}
+              to={`/edit/${collection.name}`}
               style={{ marginLeft: "10px" }}
               variant="primary"
             >

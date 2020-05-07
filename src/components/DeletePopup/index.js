@@ -13,7 +13,9 @@ const DeletePopup = ({ closePopup }) => {
           x
         </div>
         <p>Are you sure you want to delete collection?</p>
-        <Button variant="danger">Delete</Button>
+        <Button onClick={handleSubmit} variant="danger">
+          Delete
+        </Button>
       </div>
     </Popup>
   );

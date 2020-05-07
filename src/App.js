@@ -6,6 +6,7 @@ import CollectionsPage from "./pages/CollectionsPage";
 import CreateCollectionPage from "./pages/CreateCollectionPage";
 import ItemsPage from "./pages/ItemsPage";
 import ItemPage from "./pages/ItemPage";
+import AddItemPage from "./pages/AddItemPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/create" component={CreateCollectionPage} />
         <Route exact path="/collection/:id" component={ItemsPage} />
         <Route exact path="/item/:id" component={ItemPage} />
+        <Route exact path="/addItem/:id" component={AddItemPage} />
       </Switch>
     </BrowserRouter>
   );
