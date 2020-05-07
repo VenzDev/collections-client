@@ -18,7 +18,12 @@ const CollectionsPage = () => {
               </Card.Text>
             </Link>
             <div style={{ marginTop: "10px" }}>
-              <Button href="#">Edit</Button>
+              <Button href="#" variant="success">
+                Add Item
+              </Button>
+              <Button style={{ marginLeft: "10px" }} variant="primary" href="#">
+                Edit
+              </Button>
               <Button style={{ marginLeft: "10px" }} variant="danger" href="#">
                 Delete
               </Button>

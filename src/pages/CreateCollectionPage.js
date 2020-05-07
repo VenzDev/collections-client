@@ -4,6 +4,8 @@ import { Container, InputGroup, FormControl, ListGroup, Button } from "react-boo
 const CreateCollectionPage = () => {
   const [attribList, setAttribList] = useState([]);
   const [attribValue, setAttribValue] = useState("");
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
 
   const handleClick = () => {
     let list = attribList;
@@ -16,22 +18,35 @@ const CreateCollectionPage = () => {
     list = list.filter((item) => item !== attrib);
     setAttribList(list);
   };
+  const handleSubmit = () => {
+    console.log({ name: name, description: desc, attributes: attribList });
+  };
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+  const handleDesc = (e) => {
+    setDesc(e.target.value);
+  };
 
   return (
     <Container style={{ marginTop: "20px" }}>
       <div>
         <h4>General Information</h4>
-        <InputGroup className="mb-3">
+        <InputGroup onChange={handleName} className="mb-3">
           <InputGroup.Prepend>
             <InputGroup.Text id="basic-addon1">Collection Name</InputGroup.Text>
           </InputGroup.Prepend>
           <FormControl placeholder="Books" aria-label="Username" aria-describedby="basic-addon1" />
         </InputGroup>
-        <InputGroup>
+        <InputGroup onChange={handleDesc}>
           <InputGroup.Prepend>
             <InputGroup.Text>Collection description</InputGroup.Text>
           </InputGroup.Prepend>
-          <FormControl as="textarea" aria-label="With textarea" />
+          <FormControl
+            as="textarea"
+            placeholder="My great collection of books!"
+            aria-label="With textarea"
+          />
         </InputGroup>
         <h4 style={{ marginTop: "20px" }}>Attributes</h4>
         {attribList.length > 0 ? (
@@ -77,7 +92,9 @@ const CreateCollectionPage = () => {
           Add attribute
         </Button>
         <div style={{ marginTop: "20px" }}>
-          <Button variant="primary">Create Collection!</Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Create Collection!
+          </Button>
         </div>
       </div>
     </Container>

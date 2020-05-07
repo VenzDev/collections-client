@@ -35,6 +35,7 @@ const ItemsPage = () => {
 
   const sort = (e) => {
     let _items = items;
+
     _items.sort((a, b) => {
       var keyA = a[e.target.text];
       var keyB = b[e.target.text];
@@ -60,7 +61,7 @@ const ItemsPage = () => {
     <Container style={{ marginTop: "50px" }}>
       <div style={{ display: "flex" }}>
         <Pagination>{navItems}</Pagination>
-        <h5 style={{ left: "30%", position: "absolute" }}>
+        <h5 style={{ right: "15%", position: "absolute" }}>
           Items per page
           <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
             {" "}
@@ -76,7 +77,7 @@ const ItemsPage = () => {
           </span>
         </h5>
       </div>
-      <Dropdown>
+      <Dropdown style={{ paddingBottom: "20px" }}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Sort By
         </Dropdown.Toggle>
