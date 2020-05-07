@@ -1,3 +1,6 @@
+import { combineReducers } from "redux";
+import { collectionItemsReducer } from "./redux/collectionItem";
+
 const initState = {
   status: "helloWorld",
 };
@@ -9,4 +12,9 @@ const initReducer = (state = initState, action) => {
   }
 };
 
-export default initReducer;
+const reducer = combineReducers({
+  initReducer,
+  collectionItemsReducer,
+});
+
+export default reducer;

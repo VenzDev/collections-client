@@ -4,7 +4,7 @@ const fetchCollectionItemsPending = () => ({
   type: types.FETCH_COLLECTION_ITEMS_PENDING,
   payload: true,
 });
-const fetchCollectionItemsSuccess = (collectionItems = {
+const fetchCollectionItemsSuccess = (collectionItems) => ({
   type: types.FETCH_COLLECTION_ITEMS_SUCCESS,
   payload: collectionItems,
 });
