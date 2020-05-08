@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Container, InputGroup, FormControl, ListGroup, Button } from "react-bootstrap";
+import { Container, InputGroup, FormControl, ListGroup, Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const AddItemPage = (props) => {
   const [attribList, setAttribList] = useState([]);
   const [itemName, setItemName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState("");
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
   const _currentCollection = collections.filter((collection) => collection.id === id);
@@ -27,13 +29,33 @@ const AddItemPage = (props) => {
 
   const handleSubmit = () => {
     console.log({ collectionId: id, itemName, attribList });
+    console.log(imageFile);
+  };
+
+  const handleImage = (e) => {
+    setImageUrl(URL.createObjectURL(e.target.files[0]));
+    setImageFile(e.target.files[0]);
   };
 
   return (
     <Container style={{ marginTop: "20px" }}>
       <div>
         <h4>Create item in {currentCollection.name} collection</h4>
-        <InputGroup onChange={handleName} className="mb-3">
+        {imageUrl && (
+          <img
+            style={{ width: "250px", height: "250px", marginBottom: "20px" }}
+            src={imageUrl}
+          ></img>
+        )}
+        <Form onChange={handleImage}>
+          <Form.File
+            accept="image/x-png,image/jpeg"
+            id="custom-file"
+            label={imageUrl ? "Change item image" : "Load your item image"}
+            custom
+          />
+        </Form>
+        <InputGroup style={{ marginTop: "20px" }} onChange={handleName} className="mb-3">
           <InputGroup.Prepend>
             <InputGroup.Text id="basic-addon1">Item name</InputGroup.Text>
           </InputGroup.Prepend>
@@ -51,7 +73,7 @@ const AddItemPage = (props) => {
             <FormControl aria-label="Username" aria-describedby="basic-addon1" />
           </InputGroup>
         ))}
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "20px", marginBottom: "40px" }}>
           <Button onClick={handleSubmit} variant="success  ">
             Create Item!
           </Button>
