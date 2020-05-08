@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, InputGroup, FormControl, ListGroup, Button, Form } from "react-bootstrap";
+import { Container, InputGroup, FormControl, Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const AddItemPage = (props) => {
@@ -42,6 +42,7 @@ const AddItemPage = (props) => {
         <h4>Create item in {currentCollection.name} collection</h4>
         {imageUrl && (
           <img
+            alt="item"
             style={{ width: "250px", height: "250px", marginBottom: "20px" }}
             src={imageUrl}
           ></img>

@@ -18,6 +18,9 @@ const Header = () => {
           <Nav.Link as={Link} to={"/create"}>
             Create Collection
           </Nav.Link>
+          <Nav.Link as={Link} to={"/createCustom"}>
+            Create custom Item
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

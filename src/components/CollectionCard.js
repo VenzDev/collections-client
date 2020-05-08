@@ -24,7 +24,7 @@ const CollectionCard = ({ collection }) => {
             </Button>
             <Button
               as={Link}
-              to={`/edit/${collection.name}`}
+              to={`/edit/${collection.id}`}
               style={{ marginLeft: "10px" }}
               variant="primary"
             >
