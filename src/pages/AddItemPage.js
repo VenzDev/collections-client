@@ -28,8 +28,7 @@ const AddItemPage = (props) => {
   const handleName = (e) => setItemName(e.target.value);
 
   const handleSubmit = () => {
-    console.log({ collectionId: id, itemName, attribList });
-    console.log(imageFile);
+    console.log({ collectionId: id, itemName, attribList, image: imageFile });
   };
 
   const handleImage = (e) => {
