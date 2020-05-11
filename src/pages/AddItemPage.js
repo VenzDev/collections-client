@@ -32,8 +32,13 @@ const AddItemPage = (props) => {
   };
 
   const handleImage = (e) => {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageFile(reader.result);
+    };
     setImageUrl(URL.createObjectURL(e.target.files[0]));
-    setImageFile(e.target.files[0]);
   };
 
   return (

@@ -21,6 +21,9 @@ const Header = () => {
           <Nav.Link as={Link} to={"/createCustom"}>
             Create custom Item
           </Nav.Link>
+          <Nav.Link as={Link} to={"/allItems"}>
+            All items
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

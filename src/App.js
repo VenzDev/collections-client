@@ -9,6 +9,7 @@ import ItemPage from "./pages/ItemPage";
 import AddItemPage from "./pages/AddItemPage";
 import EditCollectionPage from "./pages/EditCollectionPage";
 import CreateCustomPage from "./pages/CreateCustomPage";
+import AllItemsPage from "./pages/AllItemsPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/addItem/:id" component={AddItemPage} />
         <Route exact path="/edit/:id" component={EditCollectionPage} />
         <Route exact path="/createCustom" component={CreateCustomPage} />
+        <Route exact path="/allItems" component={AllItemsPage} />
       </Switch>
     </BrowserRouter>
   );

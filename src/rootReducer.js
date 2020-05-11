@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { collectionItemsReducer } from "./redux/collectionItem";
 import { collectionsReducer } from "./redux/collection";
+import { allItemsReducer } from "./redux/allItems";
 const initState = {
   status: "helloWorld",
 };
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   initReducer,
   collectionItemsReducer,
   collectionsReducer,
+  allItemsReducer,
 });
 
 export default reducer;
