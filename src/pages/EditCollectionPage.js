@@ -19,10 +19,20 @@ const EditCollectionPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = () => {
-    console.log(name, desc);
+    console.log({ name: name, description: desc, attributes: attribList });
   };
-  const handleDelete = () => {};
-  const handleClick = () => {};
+
+  const handleClick = () => {
+    let list = attribList;
+    list.push(attribValue);
+    setAttribList(list);
+    setAttribValue("");
+  };
+  const handleDelete = (attrib) => {
+    let list = attribList;
+    list = list.filter((item) => item !== attrib);
+    setAttribList(list);
+  };
   return (
     <Container>
       {" "}

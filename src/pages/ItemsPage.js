@@ -89,20 +89,24 @@ const ItemsPage = () => {
         </Dropdown.Menu>
       </Dropdown>
       {currentItems.map((item) => (
-        <Card key={item.id} style={{ width: "100%" }}>
+        <Card key={item.id} style={{ width: "100%", marginBottom: "10px" }}>
           <Card.Body style={{ display: "flex" }}>
             <div style={{ paddingRight: "50px" }}>
               <img style={{ height: "150px" }} src={collect} alt="" />
             </div>
             <div>
-              <Card.Title as={Link} to="/item/1">
-                {item.name}
-              </Card.Title>
+              <Card.Title>{`Item name: ${item.name}`}</Card.Title>
               <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
+                {item.attribList.map((attrib) =>
+                  Object.values(attrib).map((value) => (
+                    <p>{`${Object.keys(attrib)[0]}: ${value}`}</p>
+                  ))
+                )}
               </Card.Text>
-              <Button variant="danger">Delete</Button>
+              <Button variant="success">Edit</Button>
+              <Button style={{ marginLeft: "10px" }} variant="danger">
+                Delete
+              </Button>
             </div>
           </Card.Body>
         </Card>
