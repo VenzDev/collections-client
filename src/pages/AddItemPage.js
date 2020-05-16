@@ -9,7 +9,7 @@ const AddItemPage = (props) => {
   const [imageFile, setImageFile] = useState("");
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
-  const _currentCollection = collections.filter((collection) => collection.id === id);
+  const _currentCollection = collections.filter((collection) => collection._id === id);
   const currentCollection = _currentCollection[0];
 
   const handleInput = (attrib, e) => {

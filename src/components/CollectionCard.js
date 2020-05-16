@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import DeletePopup from "./DeletePopup";
 
 const CollectionCard = ({ collection }) => {
   const [isPopup, setPopup] = useState(false);
-
   const handlePopup = (state) => setPopup(state);
   const closePopup = () => setPopup(false);
   return (
@@ -19,12 +18,12 @@ const CollectionCard = ({ collection }) => {
             <Card.Text>{collection.description}</Card.Text>
           </Link>
           <div style={{ marginTop: "10px" }}>
-            <Button as={Link} to={`/addItem/${collection.id}`} variant="success">
+            <Button as={Link} to={`/addItem/${collection._id}`} variant="success">
               Add Item
             </Button>
             <Button
               as={Link}
-              to={`/edit/${collection.id}`}
+              to={`/edit/${collection._id}`}
               style={{ marginLeft: "10px" }}
               variant="primary"
             >
@@ -45,4 +44,4 @@ const CollectionCard = ({ collection }) => {
   );
 };
 
-export default CollectionCard;
+export default withRouter(CollectionCard);

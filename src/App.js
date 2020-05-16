@@ -11,11 +11,13 @@ import EditCollectionPage from "./pages/EditCollectionPage";
 import CreateCustomPage from "./pages/CreateCustomPage";
 import AllItemsPage from "./pages/AllItemsPage";
 import EditItemPage from "./pages/EditItemPage";
+import { ToastContainer } from "react-toastify";
 
 //waiting for api!!!
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Header />
       <Switch>
         <Route exact path="/" component={CollectionsPage} />

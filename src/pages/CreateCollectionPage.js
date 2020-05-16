@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Container, InputGroup, FormControl, ListGroup, Button } from "react-bootstrap";
+import axios from "axios";
+import showToast from "../utils/showToast";
+import { withRouter } from "react-router-dom";
 
-const CreateCollectionPage = () => {
+const CreateCollectionPage = (props) => {
   const [attribList, setAttribList] = useState([]);
   const [attribValue, setAttribValue] = useState("");
   const [name, setName] = useState("");
@@ -19,7 +22,18 @@ const CreateCollectionPage = () => {
     setAttribList(list);
   };
   const handleSubmit = () => {
-    console.log({ name: name, description: desc, attributes: attribList });
+    axios
+      .post("http://localhost:3001/createCollection", {
+        name: name,
+        description: desc,
+        attributes: attribList,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          showToast("Collection created!");
+          props.history.push("/");
+        }
+      });
   };
   const handleName = (e) => {
     setName(e.target.value);
@@ -101,4 +115,4 @@ const CreateCollectionPage = () => {
   );
 };
 
-export default CreateCollectionPage;
+export default withRouter(CreateCollectionPage);
