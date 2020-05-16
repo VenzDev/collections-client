@@ -10,12 +10,28 @@ import {
   Button,
 } from "react-bootstrap";
 
-const CreateCustomPage = () => {
-  const [finalAttribList, setFinalAttribList] = useState([]);
-  const [attribList, setAttribList] = useState([]);
+const EditItemPage = () => {
+  let item = {
+    name: "xd",
+    desc: "xddd",
+    collection: "Wow",
+    finalAttribList: [
+      { asdasq: "asda" },
+      { asdasw: "asda" },
+      { asdase: "asda" },
+      { asdasr: "asda" },
+    ],
+  };
+
+  let strangeList = [];
+
+  item.finalAttribList.map((attr) => strangeList.push(Object.keys(attr)[0]));
+
+  const [finalAttribList, setFinalAttribList] = useState(item.finalAttribList);
+  const [attribList, setAttribList] = useState(strangeList);
   const [attribValue, setAttribValue] = useState("");
-  const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
+  const [name, setName] = useState(item.name);
+  const [desc, setDesc] = useState(item.desc);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [selectedCollection, setSelectedCollection] = useState("None");
@@ -168,4 +184,4 @@ const CreateCustomPage = () => {
   );
 };
 
-export default CreateCustomPage;
+export default EditItemPage;

@@ -103,7 +103,9 @@ const ItemsPage = () => {
                   ))
                 )}
               </Card.Text>
-              <Button variant="success">Edit</Button>
+              <Button as={Link} to="/editItem/1" variant="success">
+                Edit
+              </Button>
               <Button style={{ marginLeft: "10px" }} variant="danger">
                 Delete
               </Button>
