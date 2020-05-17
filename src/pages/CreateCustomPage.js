@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import showToast from "../utils/showToast";
+import { createItemEndpoint } from "../apiConfig";
 
 const CreateCustomPage = (props) => {
   const [finalAttribList, setFinalAttribList] = useState([]);
@@ -44,7 +45,7 @@ const CreateCustomPage = (props) => {
       itemName: name,
       description: desc,
     };
-    axios.post("http://localhost:3001/createItem", finalItem).then((res) => {
+    axios.post(createItemEndpoint, finalItem).then((res) => {
       if (res.status === 200) {
         showToast("Item created successfully");
         props.history.push("/");

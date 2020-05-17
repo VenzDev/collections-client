@@ -4,6 +4,7 @@ import "./collectionPageStyle.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { _collections } from "../redux/collection";
 import CollectionCard from "../components/CollectionCard";
+import Spinner from "../components/Spinner";
 
 const CollectionsPage = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const CollectionsPage = () => {
     dispatch(_collections.fetchData());
   }, [dispatch]);
   return loading ? (
-    <div>loading</div>
+    <Spinner />
   ) : (
     <Container>
       <div className="collectionContainer">

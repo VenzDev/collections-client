@@ -3,6 +3,7 @@ import { Container, InputGroup, FormControl, ListGroup, Button } from "react-boo
 import axios from "axios";
 import showToast from "../utils/showToast";
 import { withRouter } from "react-router-dom";
+import { createCollectionEndpoint } from "../apiConfig";
 
 const CreateCollectionPage = (props) => {
   const [attribList, setAttribList] = useState([]);
@@ -23,7 +24,7 @@ const CreateCollectionPage = (props) => {
   };
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3001/createCollection", {
+      .post(createCollectionEndpoint, {
         name: name,
         description: desc,
         attributes: attribList,

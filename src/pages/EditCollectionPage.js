@@ -5,7 +5,7 @@ import { Container, InputGroup, FormControl, Button, ListGroup } from "react-boo
 const EditCollectionPage = (props) => {
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
-  const _currentCollection = collections.filter((collection) => collection.id === id);
+  const _currentCollection = collections.filter((collection) => collection._id === id);
   const currentCollection = _currentCollection[0];
   const [name, setName] = useState(currentCollection.name);
   const [desc, setDesc] = useState(currentCollection.description);
@@ -36,7 +36,7 @@ const EditCollectionPage = (props) => {
   return (
     <Container>
       {" "}
-      <InputGroup className="mb-3">
+      <InputGroup style={{ marginTop: "20px" }} className="mb-3">
         <InputGroup.Prepend>
           <InputGroup.Text id="basic-addon1">Collection Name</InputGroup.Text>
         </InputGroup.Prepend>

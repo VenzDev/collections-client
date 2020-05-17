@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import showToast from "../utils/showToast";
 import { withRouter } from "react-router-dom";
+import { createItemEndpoint } from "../apiConfig";
 
 const AddItemPage = (props) => {
   const [attribList, setAttribList] = useState([]);
@@ -32,7 +33,7 @@ const AddItemPage = (props) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3001/createItem", {
+      .post(createItemEndpoint, {
         collectionId: id,
         itemName,
         attribList,
