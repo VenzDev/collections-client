@@ -148,6 +148,7 @@ const EditItemPage = (props) => {
                 />
                 <Button
                   style={{
+                    zindex: "100",
                     position: "absolute",
                     right: "30px",
                     top: "50%",

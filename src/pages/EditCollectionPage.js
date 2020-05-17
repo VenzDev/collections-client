@@ -68,6 +68,7 @@ const EditCollectionPage = (props) => {
               {attrib}{" "}
               <Button
                 style={{
+                  zIndex: "100",
                   position: "absolute",
                   right: "30px",
                   top: "50%",
