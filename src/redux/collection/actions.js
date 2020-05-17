@@ -12,7 +12,6 @@ const fetchCollectionsFailed = (error) => ({
   type: types.FETCH_COLLECTIONS_FAILED,
   payload: error,
 });
-
 export default {
   fetchCollectionsFailed,
   fetchCollectionsSuccess,

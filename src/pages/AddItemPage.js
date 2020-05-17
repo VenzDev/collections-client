@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Container, InputGroup, FormControl, Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import showToast from "../utils/showToast";
+import { withRouter } from "react-router-dom";
 
 const AddItemPage = (props) => {
   const [attribList, setAttribList] = useState([]);
@@ -28,7 +31,19 @@ const AddItemPage = (props) => {
   const handleName = (e) => setItemName(e.target.value);
 
   const handleSubmit = () => {
-    console.log({ collectionId: id, itemName, attribList, image: imageFile });
+    axios
+      .post("http://localhost:3001/createItem", {
+        collectionId: id,
+        itemName,
+        attribList,
+        image: imageFile,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          showToast("Item created successfully");
+          props.history.push("/");
+        }
+      });
   };
 
   const handleImage = (e) => {
@@ -88,4 +103,4 @@ const AddItemPage = (props) => {
   );
 };
 
-export default AddItemPage;
+export default withRouter(AddItemPage);

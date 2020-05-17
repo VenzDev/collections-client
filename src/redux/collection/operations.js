@@ -12,6 +12,8 @@ const fetchData = () => async (dispatch) => {
   }
 };
 
+
+
 export default {
   fetchData,
 };
