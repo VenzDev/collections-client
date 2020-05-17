@@ -20,7 +20,6 @@ const AllItemsPage = () => {
   useEffect(() => {
     dispatch(_allItems.fetchData());
   }, [dispatch]);
-
   return loading ? (
     <div>loading</div>
   ) : (
@@ -47,16 +46,20 @@ const AllItemsPage = () => {
         <Card key={item.id} style={{ width: "100%" }}>
           <Card.Body style={{ display: "flex" }}>
             <div style={{ paddingRight: "50px" }}>
-              <img style={{ height: "150px" }} src={collect} alt="" />
+              <img style={{ height: "200px", width: "200px" }} src={item.image} alt="" />
             </div>
             <div>
-              <Card.Title as={Link} to="/item/1">
-                {item.name}
-              </Card.Title>
+              <Card.Title>{item.itemName}</Card.Title>
               <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
+                {item.attribList.map((attrib) =>
+                  Object.values(attrib).map((value) => (
+                    <p>{`${Object.keys(attrib)[0]}: ${value}`}</p>
+                  ))
+                )}
               </Card.Text>
+              <Button as={Link} style={{ marginRight: "15px" }} to="/editItem/1" variant="primary">
+                Edit
+              </Button>
               <Button variant="danger">Delete</Button>
             </div>
           </Card.Body>

@@ -9,8 +9,10 @@ import {
   ListGroup,
   Button,
 } from "react-bootstrap";
+import axios from "axios";
+import showToast from "../utils/showToast";
 
-const CreateCustomPage = () => {
+const CreateCustomPage = (props) => {
   const [finalAttribList, setFinalAttribList] = useState([]);
   const [attribList, setAttribList] = useState([]);
   const [attribValue, setAttribValue] = useState("");
@@ -28,14 +30,26 @@ const CreateCustomPage = () => {
   };
 
   const handleName = (e) => {
-    console.log(e.target);
+    setName(e.target.value);
   };
   const handleDesc = (e) => {
-    console.log(e.target);
+    setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
-    console.log(attribList);
-    console.log(finalAttribList);
+    const _collection = collections.filter((collection) => collection.name === selectedCollection);
+    const finalItem = {
+      collectionId: _collection[0]._id,
+      attribList: finalAttribList,
+      image: imageFile,
+      itemName: name,
+      description: desc,
+    };
+    axios.post("http://localhost:3001/createItem", finalItem).then((res) => {
+      if (res.status === 200) {
+        showToast("Item created successfully");
+        props.history.push("/");
+      }
+    });
   };
   const handleClick = () => {
     let list = attribList;
@@ -53,8 +67,13 @@ const CreateCustomPage = () => {
     setFinalAttribList(list);
   };
   const handleImage = (e) => {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageFile(reader.result);
+    };
     setImageUrl(URL.createObjectURL(e.target.files[0]));
-    setImageFile(e.target.files[0]);
   };
   const handleInput = (attrib, e) => {
     let _attribList = finalAttribList;
@@ -116,7 +135,7 @@ const CreateCustomPage = () => {
         {attribList.length > 0 ? (
           <ListGroup>
             {attribList.map((attrib, id) => (
-              <InputGroup onChange={(e) => handleInput(attrib, e)} key={id} className="mb-3">
+              <InputGroup key={id} onChange={(e) => handleInput(attrib, e)} className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">{attrib}</InputGroup.Text>
                 </InputGroup.Prepend>
