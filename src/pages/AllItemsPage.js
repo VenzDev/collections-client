@@ -25,20 +25,39 @@ const AllItemsPage = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  let currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  let currentFilteredItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-  for (let number = 1; number <= Math.ceil(items.length / itemsPerPage); number++) {
-    navItems.push(
-      <Pagination.Item
-        onClick={() => {
-          handleClick(number);
-        }}
-        key={number}
-        active={number === currentPage}
-      >
-        {number}
-      </Pagination.Item>
-    );
+  if (searchValue.length > 0) {
+    console.log("xd");
+    for (let number = 1; number <= Math.ceil(filteredItems.length / itemsPerPage); number++) {
+      navItems.push(
+        <Pagination.Item
+          onClick={() => {
+            handleClick(number);
+          }}
+          key={number}
+          active={number === currentPage}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+  } else {
+    console.log("Xd1");
+    for (let number = 1; number <= Math.ceil(items.length / itemsPerPage); number++) {
+      navItems.push(
+        <Pagination.Item
+          onClick={() => {
+            handleClick(number);
+          }}
+          key={number}
+          active={number === currentPage}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
   }
 
   const dispatch = useDispatch();
@@ -100,7 +119,9 @@ const AllItemsPage = () => {
   ) : (
     <Container style={{ marginTop: "50px" }}>
       <div style={{ display: "flex" }}>
-        <Pagination>{navItems}</Pagination>
+        <div style={{ height: "50px" }}>
+          <Pagination>{navItems}</Pagination>
+        </div>
         <h5 style={{ right: "15%", position: "absolute" }}>
           Items per page
           <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
@@ -143,9 +164,9 @@ const AllItemsPage = () => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item>name</Dropdown.Item>
-          <Dropdown.Item>Another action</Dropdown.Item>
-          <Dropdown.Item>Something else</Dropdown.Item>
+          <Dropdown.Item>Item Name</Dropdown.Item>
+          <Dropdown.Item>Item Description</Dropdown.Item>
+          <Dropdown.Item>Created at</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
       {searchValue.length === 0
@@ -175,7 +196,7 @@ const AllItemsPage = () => {
               </Card.Body>
             </Card>
           ))
-        : filteredItems.map((item) => (
+        : currentFilteredItems.map((item) => (
             <Card key={item._id} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>

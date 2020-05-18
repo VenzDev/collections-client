@@ -21,7 +21,7 @@ const CreateCustomPage = (props) => {
   const [desc, setDesc] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState("");
-  const [selectedCollection, setSelectedCollection] = useState("None");
+  const [selectedCollection, setSelectedCollection] = useState("");
 
   const { collections } = useSelector((state) => state.collectionsReducer);
 
@@ -37,20 +37,29 @@ const CreateCustomPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
-    const _collection = collections.filter((collection) => collection.name === selectedCollection);
-    const finalItem = {
-      collectionId: _collection[0]._id,
-      attribList: finalAttribList,
-      image: imageFile,
-      itemName: name,
-      description: desc,
-    };
-    axios.post(createItemEndpoint, finalItem).then((res) => {
-      if (res.status === 200) {
-        showToast("Item created successfully");
-        props.history.push("/");
-      }
-    });
+    if (imageFile === "") showToast("You must choose Image for Item!");
+    else if (name === "") showToast("Empty name input");
+    else if (desc === "") showToast("Empty description input");
+    else if (selectedCollection === "") showToast("You must select Collection for Item!");
+    else if (attribList.length === 0) showToast("Your item does not have Attributes!");
+    else {
+      const _collection = collections.filter(
+        (collection) => collection.name === selectedCollection
+      );
+      const finalItem = {
+        collectionId: _collection[0]._id,
+        attribList: finalAttribList,
+        image: imageFile,
+        itemName: name,
+        description: desc,
+      };
+      axios.post(createItemEndpoint, finalItem).then((res) => {
+        if (res.status === 200) {
+          showToast("Item created successfully");
+          props.history.push("/");
+        }
+      });
+    }
   };
   const handleClick = () => {
     let list = attribList;
@@ -102,7 +111,9 @@ const CreateCustomPage = (props) => {
         )}
         <Dropdown style={{ paddingBottom: "20px" }}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Select Collection
+            {selectedCollection === ""
+              ? "Select Collection"
+              : `Selected Collection:  ${selectedCollection}`}
           </Dropdown.Toggle>
 
           <Dropdown.Menu onClick={handleDropdown}>
@@ -111,7 +122,6 @@ const CreateCustomPage = (props) => {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <h5>Selected collection: {selectedCollection} </h5>
         <Form style={{ marginBottom: "20px" }} onChange={handleImage}>
           <Form.File
             accept="image/x-png,image/jpeg"
