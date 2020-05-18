@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Dropdown, Card, Button, InputGroup, FormControl } from "react-bootstrap";
+import {
+  Container,
+  Dropdown,
+  Card,
+  Button,
+  InputGroup,
+  FormControl,
+  DropdownButton,
+} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { _allItems } from "../redux/allItems";
@@ -9,15 +17,49 @@ const AllItemsPage = () => {
   const { items, loading } = useSelector((state) => state.allItemsReducer);
   const [searchValue, setSearchValue] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
+  const [searchText, setSearchText] = useState("Name");
 
   const dispatch = useDispatch();
 
+  const handleSearchChange = (e) => {
+    const text = e.target.text;
+    if (text !== undefined) {
+      setSearchText(text);
+      setSearchValue("");
+    }
+  };
+
   const handleSearchInput = (e) => {
     let filteredItems = [];
+    const inputValue = e.target.value;
+    const inputLength = e.target.value.length;
     setSearchValue(e.target.value);
-    if (e.target.value.length > 0) {
+    if (searchText === "Name" && inputLength > 0) {
       filteredItems = items.filter((item) => item.itemName.includes(e.target.value));
     }
+    if (searchText === "Attributes" && inputLength > 0) {
+      filteredItems = items.filter((item) => {
+        let flag = 0;
+        item.attribList.map((attrib) => {
+          if (Object.keys(attrib)[0].includes(inputValue)) {
+            flag = 1;
+          }
+        });
+        return flag;
+      });
+    }
+    if (searchText === "Values in Attributes" && inputLength > 0) {
+      filteredItems = items.filter((item) => {
+        let flag = 0;
+        item.attribList.map((attrib) => {
+          if (Object.values(attrib)[0].includes(inputValue)) {
+            flag = 1;
+          }
+        });
+        return flag;
+      });
+    }
+    console.log(filteredItems);
     setFilteredItems(filteredItems);
   };
 
@@ -29,8 +71,20 @@ const AllItemsPage = () => {
   ) : (
     <Container style={{ marginTop: "50px" }}>
       <InputGroup className="mb-3">
+        <DropdownButton
+          as={InputGroup.Prepend}
+          onClick={handleSearchChange}
+          variant="outline-secondary"
+          title={searchText}
+          id="input-group-dropdown-1"
+        >
+          <Dropdown.Item>Name</Dropdown.Item>
+          <Dropdown.Item>Attributes</Dropdown.Item>
+          <Dropdown.Item>Values in Attributes</Dropdown.Item>
+        </DropdownButton>
         <FormControl
           onChange={handleSearchInput}
+          value={searchValue}
           placeholder="Search..."
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
