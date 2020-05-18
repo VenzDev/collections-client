@@ -7,6 +7,7 @@ import {
   InputGroup,
   FormControl,
   DropdownButton,
+  Pagination,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -14,10 +15,31 @@ import { _allItems } from "../redux/allItems";
 import Spinner from "../components/Spinner";
 
 const AllItemsPage = () => {
+  let navItems = [];
   const { items, loading } = useSelector((state) => state.allItemsReducer);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchText, setSearchText] = useState("Name");
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  for (let number = 1; number <= Math.ceil(items.length / itemsPerPage); number++) {
+    navItems.push(
+      <Pagination.Item
+        onClick={() => {
+          handleClick(number);
+        }}
+        key={number}
+        active={number === currentPage}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   const dispatch = useDispatch();
 
@@ -28,6 +50,13 @@ const AllItemsPage = () => {
       setSearchValue("");
     }
   };
+  const handleClick = (number) => {
+    setCurrentPage(number);
+  };
+
+  const handleItems5 = () => setItemsPerPage(5);
+  const handleItems10 = () => setItemsPerPage(10);
+  const handleItems20 = () => setItemsPerPage(20);
 
   const handleSearchInput = (e) => {
     let filteredItems = [];
@@ -70,6 +99,24 @@ const AllItemsPage = () => {
     <Spinner />
   ) : (
     <Container style={{ marginTop: "50px" }}>
+      <div style={{ display: "flex" }}>
+        <Pagination>{navItems}</Pagination>
+        <h5 style={{ right: "15%", position: "absolute" }}>
+          Items per page
+          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
+            {" "}
+            5{" "}
+          </span>
+          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems10}>
+            {" "}
+            10{" "}
+          </span>
+          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems20}>
+            {" "}
+            20{" "}
+          </span>
+        </h5>
+      </div>
       <InputGroup className="mb-3">
         <DropdownButton
           as={InputGroup.Prepend}
@@ -102,7 +149,7 @@ const AllItemsPage = () => {
         </Dropdown.Menu>
       </Dropdown>
       {searchValue.length === 0
-        ? items.map((item) => (
+        ? currentItems.map((item) => (
             <Card key={item._id} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
