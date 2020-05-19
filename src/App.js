@@ -11,7 +11,7 @@ import EditCollectionPage from "./pages/EditCollectionPage";
 import CreateCustomPage from "./pages/CreateCustomPage";
 import AllItemsPage from "./pages/AllItemsPage";
 import EditItemPage from "./pages/EditItemPage";
-import EditCollectionItemPage from "./pages/EditCollectionPage";
+import EditCollectionItemPage from "./pages/EditCollectionItemPage";
 import { ToastContainer } from "react-toastify";
 
 function App() {

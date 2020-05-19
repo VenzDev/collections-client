@@ -184,7 +184,7 @@ const ItemsPage = (props) => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px" }}
-                    to={`/editItem/${item._id}`}
+                    to={`/editCollectionItem/${item._id}`}
                     variant="primary"
                   >
                     Edit
