@@ -11,9 +11,9 @@ import EditCollectionPage from "./pages/EditCollectionPage";
 import CreateCustomPage from "./pages/CreateCustomPage";
 import AllItemsPage from "./pages/AllItemsPage";
 import EditItemPage from "./pages/EditItemPage";
+import EditCollectionItemPage from "./pages/EditCollectionPage";
 import { ToastContainer } from "react-toastify";
 
-//waiting for api!!!
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +29,7 @@ function App() {
         <Route exact path="/createCustom" component={CreateCustomPage} />
         <Route exact path="/allItems" component={AllItemsPage} />
         <Route exact path="/editItem/:id" component={EditItemPage} />
+        <Route exact path="/editCollectionItem/:id" component={EditCollectionItemPage} />
       </Switch>
     </BrowserRouter>
   );

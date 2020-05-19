@@ -4,10 +4,12 @@ const fetchCollectionsEndpoint = uri + "fetchCollections";
 const createItemEndpoint = uri + "createItem";
 const createCollectionEndpoint = uri + "createCollection";
 const fetchItemsEndpoint = uri + "fetchItems";
+const fetchCollectionItemsEndpoint = uri + "fetchCollectionItems?collectionId=";
 
 export {
   fetchCollectionsEndpoint,
   createItemEndpoint,
   createCollectionEndpoint,
   fetchItemsEndpoint,
+  fetchCollectionItemsEndpoint,
 };

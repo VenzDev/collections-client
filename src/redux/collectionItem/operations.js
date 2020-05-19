@@ -1,11 +1,12 @@
 import actions from "./actions";
-import items from "../../utils/items.json";
+import axios from "axios";
+import { fetchCollectionItemsEndpoint } from "../../apiConfig";
 
-const fetchData = () => (dispatch) => {
+const fetchData = (collectionId) => async (dispatch) => {
   try {
     dispatch(actions.fetchCollectionItemsPending());
-    const fetchedData = items.items;
-    dispatch(actions.fetchCollectionItemsSuccess(fetchedData));
+    const fetchedData = await axios.get(fetchCollectionItemsEndpoint + collectionId);
+    if (fetchedData) dispatch(actions.fetchCollectionItemsSuccess(fetchedData.data));
   } catch (err) {
     if (err) dispatch(actions.fetchCollectionItemsFailed({ message: "failed" }));
   }

@@ -12,7 +12,7 @@ const CollectionCard = ({ collection }) => {
       {isPopup && <DeletePopup closePopup={closePopup} />}
       <Card>
         <Card.Body>
-          <Link to={`/collection/${collection.name}`} style={{ textDecoration: "none" }}>
+          <Link to={`/collection/${collection._id}`} style={{ textDecoration: "none" }}>
             <Card.Title>{collection.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">Amount: 5</Card.Subtitle>
             <Card.Text>{collection.description}</Card.Text>
