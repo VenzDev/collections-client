@@ -10,7 +10,7 @@ const CollectionCard = ({ collection }) => {
   return (
     <>
       {isPopup && <DeletePopup closePopup={closePopup} />}
-      <Card>
+      <Card style={{ margin: "20px" }}>
         <Card.Body>
           <Link to={`/collection/${collection._id}`} style={{ textDecoration: "none" }}>
             <Card.Title>{collection.name}</Card.Title>

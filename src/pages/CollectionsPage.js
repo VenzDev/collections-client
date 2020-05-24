@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import "./collectionPageStyle.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { _collections } from "../redux/collection";
@@ -17,11 +17,11 @@ const CollectionsPage = () => {
     <Spinner />
   ) : (
     <Container>
-      <div className="collectionContainer">
+      <Row className="justify-content-center">
         {collections.map((collection, id) => (
           <CollectionCard collection={collection} key={id} />
         ))}
-      </div>
+      </Row>
     </Container>
   );
 };
