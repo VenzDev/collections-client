@@ -42,8 +42,14 @@ const EditItemPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
-    console.log(attribList);
-    console.log(finalAttribList);
+    const _collection = collections.filter((collection) => collection.name === selectedCollection);
+    console.log({
+      collectionId: _collection[0]._id,
+      attribList: finalAttribList,
+      image: imageFile,
+      itemName: name,
+      description: desc,
+    });
   };
   const handleClick = () => {
     let list = attribList;

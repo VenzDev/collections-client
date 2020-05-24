@@ -43,8 +43,13 @@ const EditCollectionItemPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
-    console.log(attribList);
-    console.log(finalAttribList);
+    console.log({
+      collectionId: _collection._id,
+      attribList: finalAttribList,
+      image: imageFile,
+      itemName: name,
+      description: desc,
+    });
   };
   const handleClick = () => {
     let list = attribList;

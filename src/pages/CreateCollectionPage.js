@@ -23,7 +23,12 @@ const CreateCollectionPage = (props) => {
     setAttribList(list);
   };
   const handleSubmit = () => {
-    axios
+    console.log({
+      name: name,
+      description: desc,
+      attributes: attribList,
+    });
+    /*axios
       .post(createCollectionEndpoint, {
         name: name,
         description: desc,
@@ -34,7 +39,7 @@ const CreateCollectionPage = (props) => {
           showToast("Collection created!");
           props.history.push("/");
         }
-      });
+      });*/
   };
   const handleName = (e) => {
     setName(e.target.value);

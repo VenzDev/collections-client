@@ -19,7 +19,12 @@ const EditCollectionPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = () => {
-    console.log({ name: name, description: desc, attributes: attribList });
+    console.log({
+      collectionId: currentCollection._id,
+      name: name,
+      description: desc,
+      attributes: attribList,
+    });
   };
 
   const handleClick = () => {

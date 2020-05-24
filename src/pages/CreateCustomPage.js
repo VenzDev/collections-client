@@ -46,6 +46,14 @@ const CreateCustomPage = (props) => {
       const _collection = collections.filter(
         (collection) => collection.name === selectedCollection
       );
+      console.log({
+        collectionId: _collection[0]._id,
+        attribList: finalAttribList,
+        image: imageFile,
+        itemName: name,
+        description: desc,
+      });
+      /*
       const finalItem = {
         collectionId: _collection[0]._id,
         attribList: finalAttribList,
@@ -58,7 +66,7 @@ const CreateCustomPage = (props) => {
           showToast("Item created successfully");
           props.history.push("/");
         }
-      });
+      });*/
     }
   };
   const handleClick = () => {

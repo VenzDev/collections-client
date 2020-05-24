@@ -32,7 +32,14 @@ const AddItemPage = (props) => {
   const handleName = (e) => setItemName(e.target.value);
 
   const handleSubmit = () => {
-    axios
+    console.log({
+      collectionId: id,
+      itemName,
+      attribList,
+      description: "hardcoded!",
+      image: imageFile,
+    });
+    /*axios
       .post(createItemEndpoint, {
         collectionId: id,
         itemName,
@@ -44,7 +51,7 @@ const AddItemPage = (props) => {
           showToast("Item created successfully");
           props.history.push("/");
         }
-      });
+      });*/
   };
 
   const handleImage = (e) => {
