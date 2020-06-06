@@ -158,7 +158,11 @@ const CreateCustomPage = (props) => {
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">{attrib}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl aria-label="Username" aria-describedby="basic-addon1" />
+                <FormControl
+                  aria-label="Username"
+                  placeholder={`Insert value for attribute: ${attrib}`}
+                  aria-describedby="basic-addon1"
+                />
                 <Button
                   style={{
                     zIndex: "100",

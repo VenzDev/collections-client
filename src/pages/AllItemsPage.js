@@ -31,7 +31,6 @@ const AllItemsPage = () => {
   let currentFilteredItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   if (searchValue.length > 0) {
-    console.log("xd");
     for (let number = 1; number <= Math.ceil(filteredItems.length / itemsPerPage); number++) {
       navItems.push(
         <Pagination.Item
@@ -46,7 +45,6 @@ const AllItemsPage = () => {
       );
     }
   } else {
-    console.log("Xd1");
     for (let number = 1; number <= Math.ceil(items.length / itemsPerPage); number++) {
       navItems.push(
         <Pagination.Item
@@ -78,6 +76,25 @@ const AllItemsPage = () => {
   const handleItems5 = () => setItemsPerPage(5);
   const handleItems10 = () => setItemsPerPage(10);
   const handleItems20 = () => setItemsPerPage(20);
+
+  const handleSortChange = (e) => {
+    let list = items;
+    let filteredList = currentFilteredItems;
+    if (filteredList.length > 0) {
+      if (e.target.text === "Item Name Asc")
+        filteredList = filteredList.sort((a, b) => (a.itemName > b.itemName ? 1 : -1));
+      else if (e.target.text === "Item Name Desc")
+        filteredList = filteredList.sort((a, b) => (a.itemName > b.itemName ? -1 : 1));
+    } else {
+      if (e.target.text === "Item Name Asc")
+        list = list.sort((a, b) => (a.itemName > b.itemName ? 1 : -1));
+      else if (e.target.text === "Item Name Desc")
+        list = list.sort((a, b) => (a.itemName > b.itemName ? -1 : 1));
+    }
+    if (filteredList.length > 0) currentFilteredItems = filteredList;
+    else dispatch(_allItems.sortData(list));
+    setFilteredItems(filteredList);
+  };
 
   const handleSearchInput = (e) => {
     let filteredItems = [];
@@ -124,7 +141,7 @@ const AllItemsPage = () => {
         <div style={{ height: "50px" }}>
           <Pagination>{navItems}</Pagination>
         </div>
-        <h5 style={{ right: "15%", position: "absolute" }}>
+        <h5 style={{ right: "22%", position: "absolute" }}>
           Items per page
           <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
             {" "}
@@ -165,9 +182,9 @@ const AllItemsPage = () => {
           Sort By
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.Item>Item Name</Dropdown.Item>
-          <Dropdown.Item>Item Description</Dropdown.Item>
+        <Dropdown.Menu onClick={handleSortChange}>
+          <Dropdown.Item>Item Name Asc</Dropdown.Item>
+          <Dropdown.Item>Item Name Desc</Dropdown.Item>
           <Dropdown.Item>Created at</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

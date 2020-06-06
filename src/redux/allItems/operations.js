@@ -12,6 +12,12 @@ const fetchData = () => async (dispatch) => {
   }
 };
 
+const sortData = (data) => (dispatch) => {
+  dispatch(actions.FETCH_ALLITEMS_PENDING());
+  dispatch(actions.FETCH_ALLITEMS_SUCCESS(data));
+};
+
 export default {
   fetchData,
+  sortData,
 };
