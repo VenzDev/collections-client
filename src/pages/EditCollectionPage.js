@@ -14,7 +14,7 @@ const EditCollectionPage = (props) => {
   const currentCollection = _currentCollection[0];
   const [name, setName] = useState(currentCollection.name);
   const [desc, setDesc] = useState(currentCollection.description);
-  const [attribList, setAttribList] = useState(currentCollection.attributes);
+  const [attribList, setAttribList] = useState(currentCollection.attribList);
   const [attribValue, setAttribValue] = useState("");
 
   const handleName = (e) => {
@@ -25,7 +25,7 @@ const EditCollectionPage = (props) => {
   };
   const handleSubmit = () => {
     const finalCollection = {
-      collectionId: currentCollection._id,
+      collectionId: currentCollection.collectionId,
       name: name,
       description: desc,
       attributes: attribList,

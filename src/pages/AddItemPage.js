@@ -13,7 +13,7 @@ const AddItemPage = (props) => {
   const [imageFile, setImageFile] = useState("");
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
-  const _currentCollection = collections.filter((collection) => collection._id === id);
+  const _currentCollection = collections.filter((collection) => collection.collectionId == id);
   const currentCollection = _currentCollection[0];
 
   const handleInput = (attrib, e) => {
@@ -93,7 +93,7 @@ const AddItemPage = (props) => {
             aria-describedby="basic-addon1"
           />
         </InputGroup>
-        {currentCollection.attributes.map((attrib, id) => (
+        {currentCollection.attribList.map((attrib, id) => (
           <InputGroup onChange={(e) => handleInput(attrib, e)} key={id} className="mb-3">
             <InputGroup.Prepend>
               <InputGroup.Text id="basic-addon1">{attrib}</InputGroup.Text>

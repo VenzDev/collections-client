@@ -7,11 +7,10 @@ const CollectionCard = ({ collection }) => {
   const [isPopup, setPopup] = useState(false);
   const handlePopup = (state) => setPopup(state);
   const closePopup = () => setPopup(false);
-  console.log(collection);
   return (
     <>
       {isPopup && <DeletePopup closePopup={closePopup} collectionId={collection.collectionId} />}
-      <Card style={{ margin: "20px" }}>
+      <Card style={{ margin: "20px", maxWidth: "400px" }}>
         <Card.Body>
           <Link to={`/collection/${collection.collectionId}`} style={{ textDecoration: "none" }}>
             <Card.Title>{collection.name}</Card.Title>
@@ -19,7 +18,7 @@ const CollectionCard = ({ collection }) => {
             <Card.Text>{collection.description}</Card.Text>
           </Link>
           <div style={{ marginTop: "10px" }}>
-            <Button as={Link} to={`/addItem/${collection._id}`} variant="success">
+            <Button as={Link} to={`/addItem/${collection.collectionId}`} variant="success">
               Add Item
             </Button>
             <Button
