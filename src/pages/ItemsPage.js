@@ -8,11 +8,14 @@ import {
   FormControl,
   DropdownButton,
   Pagination,
+  ListGroup,
+  ListGroupItem,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { collectionItems } from "../redux/collectionItem";
 import Spinner from "../components/Spinner";
+import DeleteItemPopup from "../components/DeleteItemPopup";
 
 const ItemsPage = (props) => {
   let navItems = [];
@@ -22,6 +25,10 @@ const ItemsPage = (props) => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchText, setSearchText] = useState("Name");
+  const [itemIdToDelete, setItemIdToDelete] = useState(null);
+
+  const [isPopup, setPopup] = useState(false);
+  const closePopup = () => setPopup(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -71,6 +78,11 @@ const ItemsPage = (props) => {
     setCurrentPage(number);
   };
 
+  const handleDelete = (itemId) => {
+    setPopup(true);
+    setItemIdToDelete(itemId);
+  };
+
   const handleItems5 = () => setItemsPerPage(5);
   const handleItems10 = () => setItemsPerPage(10);
   const handleItems20 = () => setItemsPerPage(20);
@@ -116,11 +128,12 @@ const ItemsPage = (props) => {
     <Spinner />
   ) : (
     <Container style={{ marginTop: "50px" }}>
+      {isPopup && <DeleteItemPopup handleClose={closePopup} itemId={itemIdToDelete} />}
       <div style={{ display: "flex" }}>
         <div style={{ height: "50px" }}>
           <Pagination>{navItems}</Pagination>
         </div>
-        <h5 style={{ right: "15%", position: "absolute" }}>
+        <h5 style={{ right: "22%", position: "absolute" }}>
           Items per page
           <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
             {" "}
@@ -172,24 +185,39 @@ const ItemsPage = (props) => {
             <Card key={item._id} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
-                  <img style={{ height: "200px", width: "200px" }} src={item.image} alt="" />
+                  <img style={{ height: "250px", width: "250px" }} src={item.image} alt="" />
                 </div>
                 <div>
                   <Card.Title>{item.itemName}</Card.Title>
-                  {item.attribList.map((attrib, id) =>
-                    Object.values(attrib).map((value) => (
-                      <p key={id}>{`${Object.keys(attrib)[0]}: ${value}`}</p>
-                    ))
-                  )}
+                  <Card.Text>
+                    Description: description for this item, it' huge item ale i like this
+                  </Card.Text>
+                  <ListGroup className="list-group-flush">
+                    {item.attribList.map((attrib, id) =>
+                      Object.values(attrib).map((value) => (
+                        <ListGroupItem key={id}>{`${
+                          Object.keys(attrib)[0]
+                        }: ${value}`}</ListGroupItem>
+                      ))
+                    )}
+                  </ListGroup>
                   <Button
                     as={Link}
-                    style={{ marginRight: "15px" }}
-                    to={`/editCollectionItem/${item._id}`}
+                    style={{ marginRight: "15px", marginTop: "15px" }}
+                    to={`/editItem/${item._id}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
-                  <Button variant="danger">Delete</Button>
+                  <Button
+                    onClick={() => {
+                      handleDelete(item._id);
+                    }}
+                    style={{ marginTop: "15px" }}
+                    variant="danger"
+                  >
+                    Delete
+                  </Button>
                 </div>
               </Card.Body>
             </Card>
@@ -198,24 +226,39 @@ const ItemsPage = (props) => {
             <Card key={item._id} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
-                  <img style={{ height: "200px", width: "200px" }} src={item.image} alt="" />
+                  <img style={{ height: "250px", width: "250px" }} src={item.image} alt="" />
                 </div>
                 <div>
                   <Card.Title>{item.itemName}</Card.Title>
-                  {item.attribList.map((attrib, id) =>
-                    Object.values(attrib).map((value) => (
-                      <p key={id}>{`${Object.keys(attrib)[0]}: ${value}`}</p>
-                    ))
-                  )}
+                  <Card.Text>
+                    Description: description for this item, it' huge item ale i like this
+                  </Card.Text>
+                  <ListGroup className="list-group-flush">
+                    {item.attribList.map((attrib, id) =>
+                      Object.values(attrib).map((value) => (
+                        <ListGroupItem key={id}>{`${
+                          Object.keys(attrib)[0]
+                        }: ${value}`}</ListGroupItem>
+                      ))
+                    )}
+                  </ListGroup>
                   <Button
                     as={Link}
-                    style={{ marginRight: "15px" }}
+                    style={{ marginRight: "15px", marginTop: "15px" }}
                     to={`/editItem/${item._id}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
-                  <Button variant="danger">Delete</Button>
+                  <Button
+                    onClick={() => {
+                      handleDelete(item._id);
+                    }}
+                    style={{ marginTop: "15px" }}
+                    variant="danger"
+                  >
+                    Delete
+                  </Button>
                 </div>
               </Card.Body>
             </Card>

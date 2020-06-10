@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { _allItems } from "../redux/allItems";
 import Spinner from "../components/Spinner";
+import DeleteItemPopup from "../components/DeleteItemPopup";
 
 const AllItemsPage = () => {
   let navItems = [];
@@ -24,6 +25,10 @@ const AllItemsPage = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchText, setSearchText] = useState("Name");
+  const [itemIdToDelete, setItemIdToDelete] = useState(null);
+  const [isPopup, setPopup] = useState(false);
+
+  const closePopup = () => setPopup(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -76,6 +81,11 @@ const AllItemsPage = () => {
   const handleItems5 = () => setItemsPerPage(5);
   const handleItems10 = () => setItemsPerPage(10);
   const handleItems20 = () => setItemsPerPage(20);
+
+  const handleDelete = (itemId) => {
+    setItemIdToDelete(itemId);
+    setPopup(true);
+  };
 
   const handleSortChange = (e) => {
     let list = items;
@@ -137,6 +147,7 @@ const AllItemsPage = () => {
     <Spinner />
   ) : (
     <Container style={{ marginTop: "50px" }}>
+      {isPopup && <DeleteItemPopup handleClose={closePopup} itemId={itemIdToDelete} />}
       <div style={{ display: "flex" }}>
         <div style={{ height: "50px" }}>
           <Pagination>{navItems}</Pagination>
@@ -217,7 +228,13 @@ const AllItemsPage = () => {
                   >
                     Edit
                   </Button>
-                  <Button style={{ marginTop: "15px" }} variant="danger">
+                  <Button
+                    onClick={() => {
+                      handleDelete(item._id);
+                    }}
+                    style={{ marginTop: "15px" }}
+                    variant="danger"
+                  >
                     Delete
                   </Button>
                 </div>
@@ -252,7 +269,13 @@ const AllItemsPage = () => {
                   >
                     Edit
                   </Button>
-                  <Button style={{ marginTop: "15px" }} variant="danger">
+                  <Button
+                    onClick={() => {
+                      handleDelete(item._id);
+                    }}
+                    style={{ marginTop: "15px" }}
+                    variant="danger"
+                  >
                     Delete
                   </Button>
                 </div>

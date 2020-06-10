@@ -9,6 +9,10 @@ import {
   ListGroup,
   Button,
 } from "react-bootstrap";
+import axios from "axios";
+import { editItemEndpoint } from "../apiConfig";
+import { withRouter } from "react-router-dom";
+import showToast from "../utils/showToast";
 
 const EditItemPage = (props) => {
   const id = props.match.params.id;
@@ -16,6 +20,10 @@ const EditItemPage = (props) => {
   let item = items.filter((_item) => _item._id === id);
   item = item[0];
   let strangeList = [];
+  const { collections } = useSelector((state) => state.collectionsReducer);
+
+  let _collection = collections.filter((collection) => collection._id === item.collectionId);
+  _collection = _collection[0];
 
   item.attribList.map((attr) => strangeList.push(Object.keys(attr)[0]));
 
@@ -26,9 +34,7 @@ const EditItemPage = (props) => {
   const [desc, setDesc] = useState(item.desc);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(item.image);
-  const [selectedCollection, setSelectedCollection] = useState("None");
-
-  const { collections } = useSelector((state) => state.collectionsReducer);
+  const [selectedCollection, setSelectedCollection] = useState(_collection.name);
 
   const handleDropdown = (e) => {
     console.log(e.target.text);
@@ -42,13 +48,21 @@ const EditItemPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
-    const _collection = collections.filter((collection) => collection.name === selectedCollection);
-    console.log({
-      collectionId: _collection[0]._id,
+    const __collection = collections.filter((collection) => collection.name === selectedCollection);
+    const finalItem = {
+      itemId: id,
+      collectionId: __collection[0]._id,
       attribList: finalAttribList,
       image: imageFile,
       itemName: name,
       description: desc,
+    };
+
+    axios.post(editItemEndpoint, finalItem).then((response) => {
+      if (response.status === 200) {
+        showToast("Item Updated Successfully");
+        props.history.push("/allItems");
+      }
     });
   };
   const handleClick = () => {
@@ -103,7 +117,9 @@ const EditItemPage = (props) => {
         )}
         <Dropdown style={{ paddingBottom: "20px" }}>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Select Collection
+            {selectedCollection === ""
+              ? "Select Collection"
+              : `Selected Collection:  ${selectedCollection}`}
           </Dropdown.Toggle>
 
           <Dropdown.Menu onClick={handleDropdown}>
@@ -112,7 +128,6 @@ const EditItemPage = (props) => {
             ))}
           </Dropdown.Menu>
         </Dropdown>
-        <h5>Selected collection: {selectedCollection} </h5>
         <Form style={{ marginBottom: "20px" }} onChange={handleImage}>
           <Form.File
             accept="image/x-png,image/jpeg"
@@ -200,4 +215,4 @@ const EditItemPage = (props) => {
   );
 };
 
-export default EditItemPage;
+export default withRouter(EditItemPage);

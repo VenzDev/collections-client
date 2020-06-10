@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Container, InputGroup, FormControl, Button, ListGroup } from "react-bootstrap";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import showToast from "../utils/showToast";
+import { editCollectionEndpoint } from "../apiConfig";
 
 const EditCollectionPage = (props) => {
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
-  const _currentCollection = collections.filter((collection) => collection._id === id);
+  console.log(id, typeof id);
+  const _currentCollection = collections.filter((collection) => collection.collectionId == id);
   const currentCollection = _currentCollection[0];
   const [name, setName] = useState(currentCollection.name);
   const [desc, setDesc] = useState(currentCollection.description);
@@ -19,11 +24,18 @@ const EditCollectionPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = () => {
-    console.log({
+    const finalCollection = {
       collectionId: currentCollection._id,
       name: name,
       description: desc,
       attributes: attribList,
+    };
+
+    axios.post(editCollectionEndpoint, finalCollection).then((res) => {
+      if (res.status === 200) {
+        showToast("Collection updated successfully");
+        props.history.push("/");
+      }
     });
   };
 
@@ -118,4 +130,4 @@ const EditCollectionPage = (props) => {
   );
 };
 
-export default EditCollectionPage;
+export default withRouter(EditCollectionPage);

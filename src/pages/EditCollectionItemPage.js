@@ -9,6 +9,10 @@ import {
   ListGroup,
   Button,
 } from "react-bootstrap";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import showToast from "../utils/showToast";
+import { editItemEndpoint } from "../apiConfig";
 
 const EditCollectionItemPage = (props) => {
   const id = props.match.params.id;
@@ -43,12 +47,21 @@ const EditCollectionItemPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
-    console.log({
-      collectionId: _collection._id,
+    const __collection = collections.filter((collection) => collection.name === selectedCollection);
+    const finalItem = {
+      itemId: id,
+      collectionId: __collection._id,
       attribList: finalAttribList,
       image: imageFile,
       itemName: name,
       description: desc,
+    };
+
+    axios.post(editItemEndpoint, finalItem).then((res) => {
+      if (res.status == 200) {
+        showToast("Item updated Successfully!");
+        props.history.push("/");
+      }
     });
   };
   const handleClick = () => {
@@ -201,4 +214,4 @@ const EditCollectionItemPage = (props) => {
   );
 };
 
-export default EditCollectionItemPage;
+export default withRouter(EditCollectionItemPage);
