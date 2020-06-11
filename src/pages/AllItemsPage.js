@@ -27,7 +27,6 @@ const AllItemsPage = () => {
   const [searchText, setSearchText] = useState("Name");
   const [itemIdToDelete, setItemIdToDelete] = useState(null);
   const [isPopup, setPopup] = useState(false);
-
   const closePopup = () => setPopup(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -208,9 +207,7 @@ const AllItemsPage = () => {
                 </div>
                 <div>
                   <Card.Title>{item.itemName}</Card.Title>
-                  <Card.Text>
-                    Description: description for this item, it' huge item ale i like this
-                  </Card.Text>
+                  <Card.Text>{item.description}</Card.Text>
                   <ListGroup className="list-group-flush">
                     {item.attribList.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
@@ -223,14 +220,14 @@ const AllItemsPage = () => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px", marginTop: "15px" }}
-                    to={`/editItem/${item._id}`}
+                    to={`/editItem/${item.id}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
                   <Button
                     onClick={() => {
-                      handleDelete(item._id);
+                      handleDelete(item.id);
                     }}
                     style={{ marginTop: "15px" }}
                     variant="danger"
@@ -249,9 +246,7 @@ const AllItemsPage = () => {
                 </div>
                 <div>
                   <Card.Title>{item.itemName}</Card.Title>
-                  <Card.Text>
-                    Description: description for this item, it' huge item ale i like this
-                  </Card.Text>
+                  <Card.Text>{item.description}</Card.Text>
                   <ListGroup className="list-group-flush">
                     {item.attribList.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
@@ -264,14 +259,14 @@ const AllItemsPage = () => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px", marginTop: "15px" }}
-                    to={`/editItem/${item._id}`}
+                    to={`/editItem/${item.id}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
                   <Button
                     onClick={() => {
-                      handleDelete(item._id);
+                      handleDelete(item.id);
                     }}
                     style={{ marginTop: "15px" }}
                     variant="danger"

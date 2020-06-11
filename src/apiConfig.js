@@ -3,14 +3,15 @@ const michalUri = "https://collect-backend.mikart.dev/";
 const devUri = "http://localhost:3000/";
 
 const fetchCollectionsEndpoint = michalUri + "get/collections";
-const createItemEndpoint = uri + "createItem";
+const createItemEndpoint = michalUri + "add/entry";
 const createCollectionEndpoint = michalUri + "add/collection";
-const fetchItemsEndpoint = uri + "fetchItems";
-const fetchCollectionItemsEndpoint = michalUri + "get/entries";
-const deleteCollectionEndpoint = devUri + "deleteCollection?collectionId=";
+const fetchItemsEndpoint = michalUri + "get/all/entries";
+const fetchCollectionItemsEndpoint = michalUri + "get/entries?collectionId=";
+const deleteCollectionEndpoint = michalUri + "remove/collection";
 const deleteItemEndpoint = devUri + "deleteItem?itemId=";
 const editItemEndpoint = devUri + "editItem";
 const editCollectionEndpoint = michalUri + "update/collection";
+const createCustomItemEndpoint = michalUri + "add/entry/custom";
 
 export {
   fetchCollectionsEndpoint,
@@ -22,4 +23,5 @@ export {
   deleteItemEndpoint,
   editItemEndpoint,
   editCollectionEndpoint,
+  createCustomItemEndpoint,
 };

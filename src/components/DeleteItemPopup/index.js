@@ -10,12 +10,13 @@ import { _allItems } from "../../redux/allItems";
 
 const DeleteItemPopup = ({ handleClose, itemId, history }) => {
   const handleSubmit = () => {
-    axios.get(deleteItemEndpoint + itemId).then((response) => {
+    console.log(itemId);
+    /*axios.get(deleteItemEndpoint + itemId).then((response) => {
       if (response.status === 200) {
         showToast("Item deleted Successfully!");
         history.push("/");
       }
-    });
+    });*/
   };
   return (
     <Popup>

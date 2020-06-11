@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import showToast from "../utils/showToast";
-import { createItemEndpoint } from "../apiConfig";
+import { createCustomItemEndpoint } from "../apiConfig";
 
 const CreateCustomPage = (props) => {
   const [finalAttribList, setFinalAttribList] = useState([]);
@@ -55,13 +55,13 @@ const CreateCustomPage = (props) => {
       });*/
 
       const finalItem = {
-        collectionId: _collection[0]._id,
+        collectionId: _collection[0].collectionId,
         attribList: finalAttribList,
         image: imageFile,
         itemName: name,
         description: desc,
       };
-      axios.post(createItemEndpoint, finalItem).then((res) => {
+      axios.post(createCustomItemEndpoint, finalItem).then((res) => {
         if (res.status === 200) {
           showToast("Item created successfully");
           props.history.push("/");

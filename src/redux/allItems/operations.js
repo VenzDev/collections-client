@@ -8,7 +8,7 @@ const fetchData = () => async (dispatch) => {
     const fetchedData = await axios.get(fetchItemsEndpoint);
     if (fetchedData) dispatch(actions.FETCH_ALLITEMS_SUCCESS(fetchedData.data));
   } catch (err) {
-    if (err) dispatch(actions.FETCH_ALLITEMS_FAILED());
+    //if (err) dispatch(actions.FETCH_ALLITEMS_FAILED());
   }
 };
 

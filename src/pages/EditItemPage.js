@@ -17,12 +17,14 @@ import showToast from "../utils/showToast";
 const EditItemPage = (props) => {
   const id = props.match.params.id;
   const { items } = useSelector((state) => state.allItemsReducer);
-  let item = items.filter((_item) => _item._id === id);
+  let item = items.filter((_item) => _item.id == id);
   item = item[0];
   let strangeList = [];
   const { collections } = useSelector((state) => state.collectionsReducer);
 
-  let _collection = collections.filter((collection) => collection._id === item.collectionId);
+  let _collection = collections.filter(
+    (collection) => collection.collectionId === item.collectionId
+  );
   _collection = _collection[0];
 
   item.attribList.map((attr) => strangeList.push(Object.keys(attr)[0]));

@@ -42,6 +42,7 @@ const AddItemPage = (props) => {
     axios
       .post(createItemEndpoint, {
         collectionId: id,
+        description: "hardcoded!",
         itemName,
         attribList,
         image: imageFile,
