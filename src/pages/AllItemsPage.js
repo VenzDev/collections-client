@@ -91,14 +91,13 @@ const AllItemsPage = () => {
     let filteredList = currentFilteredItems;
     if (filteredList.length > 0) {
       if (e.target.text === "Item Name Asc")
-        filteredList = filteredList.sort((a, b) => (a.itemName > b.itemName ? 1 : -1));
+        filteredList = filteredList.sort((a, b) => (a.name > b.name ? 1 : -1));
       else if (e.target.text === "Item Name Desc")
-        filteredList = filteredList.sort((a, b) => (a.itemName > b.itemName ? -1 : 1));
+        filteredList = filteredList.sort((a, b) => (a.name > b.name ? -1 : 1));
     } else {
-      if (e.target.text === "Item Name Asc")
-        list = list.sort((a, b) => (a.itemName > b.itemName ? 1 : -1));
+      if (e.target.text === "Item Name Asc") list = list.sort((a, b) => (a.name > b.name ? 1 : -1));
       else if (e.target.text === "Item Name Desc")
-        list = list.sort((a, b) => (a.itemName > b.itemName ? -1 : 1));
+        list = list.sort((a, b) => (a.name > b.name ? -1 : 1));
     }
     if (filteredList.length > 0) currentFilteredItems = filteredList;
     else dispatch(_allItems.sortData(list));
@@ -111,7 +110,7 @@ const AllItemsPage = () => {
     const inputLength = e.target.value.length;
     setSearchValue(e.target.value);
     if (searchText === "Name" && inputLength > 0) {
-      filteredItems = items.filter((item) => item.itemName.includes(e.target.value));
+      filteredItems = items.filter((item) => item.name.includes(e.target.value));
     }
     if (searchText === "Attributes" && inputLength > 0) {
       filteredItems = items.filter((item) => {
@@ -135,7 +134,6 @@ const AllItemsPage = () => {
         return flag;
       });
     }
-    console.log(filteredItems);
     setFilteredItems(filteredItems);
   };
 
@@ -200,16 +198,16 @@ const AllItemsPage = () => {
       </Dropdown>
       {searchValue.length === 0
         ? currentItems.map((item) => (
-            <Card key={item._id} style={{ width: "100%" }}>
+            <Card key={item.entryId} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
                   <img style={{ height: "250px", width: "250px" }} src={item.image} alt="" />
                 </div>
                 <div>
-                  <Card.Title>{item.itemName}</Card.Title>
-                  <Card.Text>{item.description}</Card.Text>
+                  <Card.Title>{item.name}</Card.Title>
+                  <Card.Text>{`Description: ${item.description}`}</Card.Text>
                   <ListGroup className="list-group-flush">
-                    {item.attribList.map((attrib, id) =>
+                    {item.attributes.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
                         <ListGroupItem key={id}>{`${
                           Object.keys(attrib)[0]
@@ -220,14 +218,14 @@ const AllItemsPage = () => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px", marginTop: "15px" }}
-                    to={`/editItem/${item.id}`}
+                    to={`/editItem/${item.entryId}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
                   <Button
                     onClick={() => {
-                      handleDelete(item.id);
+                      handleDelete(item.entryId);
                     }}
                     style={{ marginTop: "15px" }}
                     variant="danger"
@@ -239,16 +237,16 @@ const AllItemsPage = () => {
             </Card>
           ))
         : currentFilteredItems.map((item) => (
-            <Card key={item._id} style={{ width: "100%" }}>
+            <Card key={item.entryId} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
                   <img style={{ height: "250px", width: "250px" }} src={item.image} alt="" />
                 </div>
                 <div>
-                  <Card.Title>{item.itemName}</Card.Title>
-                  <Card.Text>{item.description}</Card.Text>
+                  <Card.Title>{item.name}</Card.Title>
+                  <Card.Text>{`Description: ${item.description}`}</Card.Text>
                   <ListGroup className="list-group-flush">
-                    {item.attribList.map((attrib, id) =>
+                    {item.attributes.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
                         <ListGroupItem key={id}>{`${
                           Object.keys(attrib)[0]
@@ -259,14 +257,14 @@ const AllItemsPage = () => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px", marginTop: "15px" }}
-                    to={`/editItem/${item.id}`}
+                    to={`/editItem/${item.entryId}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
                   <Button
                     onClick={() => {
-                      handleDelete(item.id);
+                      handleDelete(item.entryId);
                     }}
                     style={{ marginTop: "15px" }}
                     variant="danger"

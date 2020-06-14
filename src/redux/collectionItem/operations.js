@@ -5,6 +5,7 @@ import { fetchCollectionItemsEndpoint } from "../../apiConfig";
 const fetchData = (collectionId) => async (dispatch) => {
   try {
     dispatch(actions.fetchCollectionItemsPending());
+    console.log(collectionId);
     const fetchedData = await axios.get(fetchCollectionItemsEndpoint + collectionId);
     if (fetchedData) dispatch(actions.fetchCollectionItemsSuccess(fetchedData.data));
   } catch (err) {

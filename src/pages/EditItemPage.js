@@ -17,7 +17,7 @@ import showToast from "../utils/showToast";
 const EditItemPage = (props) => {
   const id = props.match.params.id;
   const { items } = useSelector((state) => state.allItemsReducer);
-  let item = items.filter((_item) => _item.id == id);
+  let item = items.filter((_item) => _item.entryId == id);
   item = item[0];
   let strangeList = [];
   const { collections } = useSelector((state) => state.collectionsReducer);
@@ -27,13 +27,13 @@ const EditItemPage = (props) => {
   );
   _collection = _collection[0];
 
-  item.attribList.map((attr) => strangeList.push(Object.keys(attr)[0]));
+  item.attributes.map((attr) => strangeList.push(Object.keys(attr)[0]));
 
-  const [finalAttribList, setFinalAttribList] = useState(item.attribList);
+  const [finalAttribList, setFinalAttribList] = useState(item.attributes);
   const [attribList, setAttribList] = useState(strangeList);
   const [attribValue, setAttribValue] = useState("");
-  const [name, setName] = useState(item.itemName);
-  const [desc, setDesc] = useState(item.desc);
+  const [name, setName] = useState(item.name);
+  const [desc, setDesc] = useState(item.description);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(item.image);
   const [selectedCollection, setSelectedCollection] = useState(_collection.name);
@@ -52,15 +52,15 @@ const EditItemPage = (props) => {
   const handleSubmit = (e) => {
     const __collection = collections.filter((collection) => collection.name === selectedCollection);
     const finalItem = {
-      itemId: id,
-      collectionId: __collection[0]._id,
-      attribList: finalAttribList,
+      entryId: id,
+      collectionId: __collection[0].collectionId,
+      attributes: finalAttribList,
       image: imageFile,
-      itemName: name,
+      name: name,
       description: desc,
     };
 
-    axios.post(editItemEndpoint, finalItem).then((response) => {
+    axios.put(editItemEndpoint, finalItem).then((response) => {
       if (response.status === 200) {
         showToast("Item Updated Successfully");
         props.history.push("/allItems");
@@ -101,7 +101,7 @@ const EditItemPage = (props) => {
   };
   const getInitValue = (attrib) => {
     if (attrib === null || attrib === undefined) return "";
-    const _value = item.attribList.filter((_attrib) => Object.keys(_attrib)[0] === attrib);
+    const _value = item.attributes.filter((_attrib) => Object.keys(_attrib)[0] === attrib);
     if (_value.length === 0) return "";
     return Object.values(_value[0])[0];
   };
@@ -150,11 +150,17 @@ const EditItemPage = (props) => {
             aria-describedby="basic-addon1"
           />
         </InputGroup>
-        <InputGroup onChange={handleDesc}>
+        <InputGroup>
           <InputGroup.Prepend>
             <InputGroup.Text>Item description</InputGroup.Text>
           </InputGroup.Prepend>
-          <FormControl as="textarea" placeholder="My great book" aria-label="With textarea" />
+          <FormControl
+            onChange={handleDesc}
+            value={desc}
+            as="textarea"
+            placeholder="My great book"
+            aria-label="With textarea"
+          />
         </InputGroup>
         <h4 style={{ marginTop: "20px" }}>Attributes</h4>
         {attribList.length > 0 ? (

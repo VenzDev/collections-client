@@ -189,9 +189,7 @@ const ItemsPage = (props) => {
                 </div>
                 <div>
                   <Card.Title>{item.itemName}</Card.Title>
-                  <Card.Text>
-                    Description: description for this item, it' huge item ale i like this
-                  </Card.Text>
+                  <Card.Text>{`Description: ${item.description}`}</Card.Text>
                   <ListGroup className="list-group-flush">
                     {item.attribList.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
@@ -230,9 +228,7 @@ const ItemsPage = (props) => {
                 </div>
                 <div>
                   <Card.Title>{item.itemName}</Card.Title>
-                  <Card.Text>
-                    Description: description for this item, it' huge item ale i like this
-                  </Card.Text>
+                  <Card.Text>{`Description: ${item.description}`}</Card.Text>
                   <ListGroup className="list-group-flush">
                     {item.attribList.map((attrib, id) =>
                       Object.values(attrib).map((value) => (

@@ -46,23 +46,17 @@ const CreateCustomPage = (props) => {
       const _collection = collections.filter(
         (collection) => collection.name === selectedCollection
       );
-      /*console.log({
-        collectionId: _collection[0]._id,
-        attribList: finalAttribList,
-        image: imageFile,
-        itemName: name,
-        description: desc,
-      });*/
 
       const finalItem = {
         collectionId: _collection[0].collectionId,
-        attribList: finalAttribList,
+        attributes: finalAttribList,
         image: imageFile,
-        itemName: name,
+        name: name,
         description: desc,
       };
       axios.post(createCustomItemEndpoint, finalItem).then((res) => {
-        if (res.status === 200) {
+        console.log(res.status);
+        if (res.status === 201) {
           showToast("Item created successfully");
           props.history.push("/");
         }
@@ -76,7 +70,6 @@ const CreateCustomPage = (props) => {
     setAttribValue("");
   };
   const handleDelete = (attrib) => {
-    console.log(attrib);
     let list = attribList;
     list = list.filter((item) => item !== attrib);
     setAttribList(list);

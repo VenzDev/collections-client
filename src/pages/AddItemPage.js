@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, InputGroup, FormControl, Button, Form } from "react-bootstrap";
+import { Container, InputGroup, FormControl, Button, Form, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import showToast from "../utils/showToast";
@@ -8,6 +8,8 @@ import { createItemEndpoint } from "../apiConfig";
 
 const AddItemPage = (props) => {
   const [attribList, setAttribList] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [desc, setDesc] = useState("");
   const [itemName, setItemName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState("");
@@ -30,29 +32,27 @@ const AddItemPage = (props) => {
   };
 
   const handleName = (e) => setItemName(e.target.value);
+  const handleDesc = (e) => setDesc(e.target.value);
 
   const handleSubmit = () => {
-    /*console.log({
+    if (itemName === "" || desc === "" || imageFile === "") {
+      showToast("Empty Fields!");
+      return;
+    }
+    const finalItem = {
       collectionId: id,
-      itemName,
-      attribList,
-      description: "hardcoded!",
+      name: itemName,
+      attributes: attribList,
+      description: desc,
       image: imageFile,
-    });*/
-    axios
-      .post(createItemEndpoint, {
-        collectionId: id,
-        description: "hardcoded!",
-        itemName,
-        attribList,
-        image: imageFile,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          showToast("Item created successfully");
-          props.history.push("/");
-        }
-      });
+    };
+    setLoading(true);
+    axios.post(createItemEndpoint, finalItem).then((res) => {
+      if (res.status === 201) {
+        showToast("Item successfully created");
+        props.history.push("/");
+      }
+    });
   };
 
   const handleImage = (e) => {
@@ -94,7 +94,18 @@ const AddItemPage = (props) => {
             aria-describedby="basic-addon1"
           />
         </InputGroup>
-        {currentCollection.attribList.map((attrib, id) => (
+        <InputGroup style={{ marginTop: "20px" }} onChange={handleDesc} className="mb-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="basic-addon1">Item Description</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            as="textarea"
+            placeholder="It's my favourite book"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+        </InputGroup>
+        {currentCollection.attributes.map((attrib, id) => (
           <InputGroup onChange={(e) => handleInput(attrib, e)} key={id} className="mb-3">
             <InputGroup.Prepend>
               <InputGroup.Text id="basic-addon1">{attrib}</InputGroup.Text>
@@ -104,7 +115,10 @@ const AddItemPage = (props) => {
         ))}
         <div style={{ marginTop: "20px", marginBottom: "40px" }}>
           <Button onClick={handleSubmit} variant="success  ">
-            Create Item!
+            {isLoading ? "Loading... " : "Create Item!"}
+            {isLoading && (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            )}
           </Button>
         </div>
       </div>

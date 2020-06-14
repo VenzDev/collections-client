@@ -20,17 +20,19 @@ const EditCollectionItemPage = (props) => {
   let item = items.filter((_item) => _item._id === id);
   item = item[0];
   let strangeList = [];
-  item.attribList.map((attr) => strangeList.push(Object.keys(attr)[0]));
+  item.attributes.map((attr) => strangeList.push(Object.keys(attr)[0]));
 
   const { collections } = useSelector((state) => state.collectionsReducer);
-  let _collection = collections.filter((collection) => collection._id === item.collectionId);
+  let _collection = collections.filter(
+    (collection) => collection.collectionId === item.collectionId
+  );
   _collection = _collection[0];
 
-  const [finalAttribList, setFinalAttribList] = useState(item.attribList);
+  const [finalAttribList, setFinalAttribList] = useState(item.attributes);
   const [attribList, setAttribList] = useState(strangeList);
   const [attribValue, setAttribValue] = useState("");
-  const [name, setName] = useState(item.itemName);
-  const [desc, setDesc] = useState(item.desc);
+  const [name, setName] = useState(item.name);
+  const [desc, setDesc] = useState(item.description);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(item.image);
   const [selectedCollection, setSelectedCollection] = useState(_collection.name);
@@ -49,11 +51,11 @@ const EditCollectionItemPage = (props) => {
   const handleSubmit = (e) => {
     const __collection = collections.filter((collection) => collection.name === selectedCollection);
     const finalItem = {
-      itemId: id,
+      entryId: id,
       collectionId: __collection._id,
-      attribList: finalAttribList,
+      attributes: finalAttribList,
       image: imageFile,
-      itemName: name,
+      name: name,
       description: desc,
     };
 
