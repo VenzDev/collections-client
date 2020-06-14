@@ -8,6 +8,7 @@ import {
   Dropdown,
   ListGroup,
   Button,
+  Spinner,
 } from "react-bootstrap";
 import axios from "axios";
 import { editItemEndpoint } from "../apiConfig";
@@ -17,7 +18,7 @@ import showToast from "../utils/showToast";
 const EditItemPage = (props) => {
   const id = props.match.params.id;
   const { items } = useSelector((state) => state.allItemsReducer);
-  let item = items.filter((_item) => _item.entryId == id);
+  let item = items.filter((_item) => _item.entryId === id);
   item = item[0];
   let strangeList = [];
   const { collections } = useSelector((state) => state.collectionsReducer);
@@ -37,9 +38,9 @@ const EditItemPage = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState(item.image);
   const [selectedCollection, setSelectedCollection] = useState(_collection.name);
+  const [isLoading, setLoading] = useState(false);
 
   const handleDropdown = (e) => {
-    console.log(e.target.text);
     setSelectedCollection(e.target.text);
   };
 
@@ -50,6 +51,10 @@ const EditItemPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = (e) => {
+    if (finalAttribList.length === 0 || name === "" || desc === "") {
+      showToast("Empty Fields!");
+      return;
+    }
     const __collection = collections.filter((collection) => collection.name === selectedCollection);
     const finalItem = {
       entryId: id,
@@ -59,10 +64,14 @@ const EditItemPage = (props) => {
       name: name,
       description: desc,
     };
-
+    console.log(finalItem);
+    setLoading(true);
     axios.put(editItemEndpoint, finalItem).then((response) => {
       if (response.status === 200) {
         showToast("Item Updated Successfully");
+        props.history.push("/allItems");
+      } else {
+        showToast("Something went Wrong!");
         props.history.push("/allItems");
       }
     });
@@ -74,7 +83,6 @@ const EditItemPage = (props) => {
     setAttribValue("");
   };
   const handleDelete = (attrib) => {
-    console.log(attrib);
     let list = attribList;
     list = list.filter((item) => item !== attrib);
     setAttribList(list);
@@ -87,7 +95,6 @@ const EditItemPage = (props) => {
     setImageFile(e.target.files[0]);
   };
   const handleInput = (attrib, e) => {
-    console.log(attrib);
     let _attribList = finalAttribList;
     const list = finalAttribList.filter((_attrib) => Object.keys(_attrib)[0] === attrib);
     let newInputValue = { [attrib]: e.target.value };
@@ -166,7 +173,7 @@ const EditItemPage = (props) => {
         {attribList.length > 0 ? (
           <ListGroup>
             {attribList.map((attrib, id) => (
-              <InputGroup onChange={(e) => handleInput(attrib, e)} key={id} className="mb-3">
+              <InputGroup key={id} onChange={(e) => handleInput(attrib, e)} className="mb-3">
                 <InputGroup.Prepend>
                   <InputGroup.Text id="basic-addon1">{attrib}</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -213,9 +220,12 @@ const EditItemPage = (props) => {
         <Button onClick={handleClick} variant="secondary">
           Add attribute
         </Button>
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "20px", marginBottom: "50px" }}>
           <Button variant="primary" onClick={handleSubmit}>
-            Edit Item!
+            {isLoading ? "Loading... " : "Edit Item!"}
+            {isLoading && (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            )}
           </Button>
         </div>
       </div>

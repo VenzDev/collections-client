@@ -1,6 +1,4 @@
-const uri = "https://collection-server.herokuapp.com/";
 const michalUri = "https://collect-backend.mikart.dev/";
-const devUri = "http://localhost:3000/";
 
 const fetchCollectionsEndpoint = michalUri + "api/Collections"; //working
 const createItemEndpoint = michalUri + "api/Entries"; //working

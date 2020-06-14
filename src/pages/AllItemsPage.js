@@ -115,7 +115,7 @@ const AllItemsPage = () => {
     if (searchText === "Attributes" && inputLength > 0) {
       filteredItems = items.filter((item) => {
         let flag = 0;
-        item.attribList.map((attrib) => {
+        item.attributes.map((attrib) => {
           if (Object.keys(attrib)[0].includes(inputValue)) {
             flag = 1;
           }
@@ -126,7 +126,7 @@ const AllItemsPage = () => {
     if (searchText === "Values in Attributes" && inputLength > 0) {
       filteredItems = items.filter((item) => {
         let flag = 0;
-        item.attribList.map((attrib) => {
+        item.attributes.map((attrib) => {
           if (Object.values(attrib)[0].includes(inputValue)) {
             flag = 1;
           }

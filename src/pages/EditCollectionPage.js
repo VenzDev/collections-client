@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, InputGroup, FormControl, Button, ListGroup } from "react-bootstrap";
+import { Container, InputGroup, FormControl, Button, ListGroup, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import showToast from "../utils/showToast";
@@ -9,12 +9,13 @@ import { editCollectionEndpoint } from "../apiConfig";
 const EditCollectionPage = (props) => {
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
-  const _currentCollection = collections.filter((collection) => collection.collectionId == id);
+  const _currentCollection = collections.filter((collection) => collection.collectionId === id);
   const currentCollection = _currentCollection[0];
   const [name, setName] = useState(currentCollection.name);
   const [desc, setDesc] = useState(currentCollection.description);
   const [attribList, setAttribList] = useState(currentCollection.attributes);
   const [attribValue, setAttribValue] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -23,6 +24,11 @@ const EditCollectionPage = (props) => {
     setDesc(e.target.value);
   };
   const handleSubmit = () => {
+    if (name === "" || desc === "" || attribList.length === 0) {
+      showToast("Empty Fields!");
+      return;
+    }
+    setLoading(true);
     const finalCollection = {
       collectionId: currentCollection.collectionId,
       name: name,
@@ -122,7 +128,10 @@ const EditCollectionPage = (props) => {
       </Button>
       <div style={{ marginTop: "20px" }}>
         <Button variant="primary" onClick={handleSubmit}>
-          Edit Collection!
+          {isLoading ? "Loading..." : "Edit Collection!"}
+          {isLoading && (
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          )}
         </Button>
       </div>
     </Container>

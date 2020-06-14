@@ -38,7 +38,6 @@ const EditCollectionItemPage = (props) => {
   const [selectedCollection, setSelectedCollection] = useState(_collection.name);
 
   const handleDropdown = (e) => {
-    console.log(e.target.text);
     setSelectedCollection(e.target.text);
   };
 
@@ -60,7 +59,7 @@ const EditCollectionItemPage = (props) => {
     };
 
     axios.post(editItemEndpoint, finalItem).then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         showToast("Item updated Successfully!");
         props.history.push("/");
       }
@@ -73,7 +72,6 @@ const EditCollectionItemPage = (props) => {
     setAttribValue("");
   };
   const handleDelete = (attrib) => {
-    console.log(attrib);
     let list = attribList;
     list = list.filter((item) => item !== attrib);
     setAttribList(list);
@@ -86,7 +84,6 @@ const EditCollectionItemPage = (props) => {
     setImageFile(e.target.files[0]);
   };
   const handleInput = (attrib, e) => {
-    console.log(attrib);
     let _attribList = finalAttribList;
     const list = finalAttribList.filter((_attrib) => Object.keys(_attrib)[0] === attrib);
     let newInputValue = { [attrib]: e.target.value };

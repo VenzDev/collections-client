@@ -117,13 +117,12 @@ const ItemsPage = (props) => {
         return flag;
       });
     }
-    console.log(filteredItems);
     setFilteredItems(filteredItems);
   };
 
   useEffect(() => {
     dispatch(collectionItems.fetchData(props.match.params.id));
-  }, [dispatch]);
+  }, [dispatch, props.match.params.id]);
   return loading ? (
     <Spinner />
   ) : (
@@ -250,7 +249,7 @@ const ItemsPage = (props) => {
                     onClick={() => {
                       handleDelete(item._id);
                     }}
-                    style={{ marginTop: "15px" }}
+                    style={{ marginTop: "15px", marginBottom: "50px" }}
                     variant="danger"
                   >
                     Delete

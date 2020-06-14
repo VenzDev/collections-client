@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Popup from "../Popup";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import "./deletePopup.scss";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
@@ -11,8 +11,10 @@ import { _collections } from "../../redux/collection";
 
 const DeletePopup = ({ closePopup, collectionId }) => {
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = () => {
+    setLoading(true);
     axios.delete(deleteCollectionEndpoint + collectionId).then((response) => {
       if (response.status === 200) {
         showToast("Collection deleted Successfully!");
@@ -29,7 +31,10 @@ const DeletePopup = ({ closePopup, collectionId }) => {
         </div>
         <p>Are you sure you want to delete collection?</p>
         <Button onClick={handleSubmit} variant="danger">
-          Delete
+          {isLoading ? "Loading... " : "Delete"}
+          {isLoading && (
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          )}
         </Button>
       </div>
     </Popup>

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Container, InputGroup, FormControl, ListGroup, Button } from "react-bootstrap";
+import { Container, InputGroup, FormControl, ListGroup, Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 import showToast from "../utils/showToast";
 import { withRouter } from "react-router-dom";
 import { createCollectionEndpoint } from "../apiConfig";
 
 const CreateCollectionPage = (props) => {
+  const [isLoading, setLoading] = useState(false);
   const [attribList, setAttribList] = useState([]);
   const [attribValue, setAttribValue] = useState("");
   const [name, setName] = useState("");
@@ -23,6 +24,11 @@ const CreateCollectionPage = (props) => {
     setAttribList(list);
   };
   const handleSubmit = () => {
+    if (name === "" || desc === "" || attribList.length === 0) {
+      showToast("Empty Fields!");
+      return;
+    }
+    setLoading(true);
     axios
       .post(createCollectionEndpoint, {
         name: name,
@@ -109,7 +115,10 @@ const CreateCollectionPage = (props) => {
         </Button>
         <div style={{ marginTop: "20px" }}>
           <Button variant="primary" onClick={handleSubmit}>
-            Create Collection!
+            {isLoading ? "Loading... " : "Create Collection!"}
+            {isLoading && (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            )}
           </Button>
         </div>
       </div>

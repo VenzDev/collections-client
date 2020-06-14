@@ -8,6 +8,7 @@ import {
   Dropdown,
   ListGroup,
   Button,
+  Spinner,
 } from "react-bootstrap";
 import axios from "axios";
 import showToast from "../utils/showToast";
@@ -22,11 +23,11 @@ const CreateCustomPage = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [selectedCollection, setSelectedCollection] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const { collections } = useSelector((state) => state.collectionsReducer);
 
   const handleDropdown = (e) => {
-    console.log(e.target.text);
     setSelectedCollection(e.target.text);
   };
 
@@ -46,7 +47,7 @@ const CreateCustomPage = (props) => {
       const _collection = collections.filter(
         (collection) => collection.name === selectedCollection
       );
-
+      setLoading(true);
       const finalItem = {
         collectionId: _collection[0].collectionId,
         attributes: finalAttribList,
@@ -55,7 +56,6 @@ const CreateCustomPage = (props) => {
         description: desc,
       };
       axios.post(createCustomItemEndpoint, finalItem).then((res) => {
-        console.log(res.status);
         if (res.status === 201) {
           showToast("Item created successfully");
           props.history.push("/");
@@ -196,7 +196,10 @@ const CreateCustomPage = (props) => {
         </Button>
         <div style={{ marginTop: "20px" }}>
           <Button variant="primary" onClick={handleSubmit}>
-            Create Item!
+            {isLoading ? "Loading... " : "Create Item!"}
+            {isLoading && (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            )}
           </Button>
         </div>
       </div>
