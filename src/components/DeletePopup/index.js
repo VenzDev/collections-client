@@ -13,15 +13,12 @@ const DeletePopup = ({ closePopup, collectionId }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log(collectionId);
-    axios
-      .delete(deleteCollectionEndpoint, { data: { toRemoveCollectionId: collectionId } })
-      .then((response) => {
-        if (response.status === 200) {
-          showToast("Collection deleted Successfully!");
-          dispatch(_collections.fetchData());
-        }
-      });
+    axios.delete(deleteCollectionEndpoint + collectionId).then((response) => {
+      if (response.status === 200) {
+        showToast("Collection deleted Successfully!");
+        dispatch(_collections.fetchData());
+      }
+    });
   };
   const handleClose = () => closePopup();
   return (

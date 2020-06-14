@@ -18,9 +18,8 @@ const CollectionsPage = () => {
   ) : (
     <Container>
       <Row className="justify-content-center">
-        {collections.map((collection, id) => (
-          <CollectionCard collection={collection} key={id} />
-        ))}
+        {collections.length > 0 &&
+          collections.map((collection, id) => <CollectionCard collection={collection} key={id} />)}
       </Row>
     </Container>
   );

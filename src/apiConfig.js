@@ -2,15 +2,15 @@ const uri = "https://collection-server.herokuapp.com/";
 const michalUri = "https://collect-backend.mikart.dev/";
 const devUri = "http://localhost:3000/";
 
-const fetchCollectionsEndpoint = michalUri + "get/collections";
+const fetchCollectionsEndpoint = michalUri + "api/Collections"; //working
 const createItemEndpoint = michalUri + "add/entry";
-const createCollectionEndpoint = michalUri + "add/collection";
+const createCollectionEndpoint = michalUri + "api/Collections"; //working
 const fetchItemsEndpoint = michalUri + "get/all/entries";
 const fetchCollectionItemsEndpoint = michalUri + "get/entries?collectionId=";
-const deleteCollectionEndpoint = michalUri + "remove/collection";
+const deleteCollectionEndpoint = michalUri + "api/Collections/"; //working
 const deleteItemEndpoint = devUri + "deleteItem?itemId=";
 const editItemEndpoint = devUri + "editItem";
-const editCollectionEndpoint = michalUri + "update/collection";
+const editCollectionEndpoint = michalUri + "api/Collections";
 const createCustomItemEndpoint = michalUri + "add/entry/custom";
 
 export {

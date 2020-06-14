@@ -23,11 +23,6 @@ const CreateCollectionPage = (props) => {
     setAttribList(list);
   };
   const handleSubmit = () => {
-    /*console.log({
-      name: name,
-      description: desc,
-      attributes: attribList,
-    });*/
     axios
       .post(createCollectionEndpoint, {
         name: name,
@@ -35,7 +30,7 @@ const CreateCollectionPage = (props) => {
         attributes: attribList,
       })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           showToast("Collection created!");
           props.history.push("/");
         }

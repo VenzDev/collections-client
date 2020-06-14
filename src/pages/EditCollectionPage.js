@@ -9,12 +9,11 @@ import { editCollectionEndpoint } from "../apiConfig";
 const EditCollectionPage = (props) => {
   const { collections } = useSelector((state) => state.collectionsReducer);
   const id = props.match.params.id;
-  console.log(id, typeof id);
   const _currentCollection = collections.filter((collection) => collection.collectionId == id);
   const currentCollection = _currentCollection[0];
   const [name, setName] = useState(currentCollection.name);
   const [desc, setDesc] = useState(currentCollection.description);
-  const [attribList, setAttribList] = useState(currentCollection.attribList);
+  const [attribList, setAttribList] = useState(currentCollection.attributes);
   const [attribValue, setAttribValue] = useState("");
 
   const handleName = (e) => {
@@ -31,7 +30,7 @@ const EditCollectionPage = (props) => {
       attributes: attribList,
     };
 
-    axios.post(editCollectionEndpoint, finalCollection).then((res) => {
+    axios.put(editCollectionEndpoint, finalCollection).then((res) => {
       if (res.status === 200) {
         showToast("Collection updated successfully");
         props.history.push("/");
