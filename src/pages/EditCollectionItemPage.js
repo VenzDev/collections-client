@@ -17,7 +17,7 @@ import { editItemEndpoint } from "../apiConfig";
 const EditCollectionItemPage = (props) => {
   const id = props.match.params.id;
   const { items } = useSelector((state) => state.collectionItemsReducer);
-  let item = items.filter((_item) => _item._id === id);
+  let item = items.filter((_item) => _item.entryId === id);
   item = item[0];
   let strangeList = [];
   item.attributes.map((attr) => strangeList.push(Object.keys(attr)[0]));
@@ -97,7 +97,7 @@ const EditCollectionItemPage = (props) => {
   };
   const getInitValue = (attrib) => {
     if (attrib === null || attrib === undefined) return "";
-    const _value = item.attribList.filter((_attrib) => Object.keys(_attrib)[0] === attrib);
+    const _value = item.attributes.filter((_attrib) => Object.keys(_attrib)[0] === attrib);
     if (_value.length === 0) return "";
     return Object.values(_value[0])[0];
   };

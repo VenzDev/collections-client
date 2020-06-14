@@ -93,12 +93,12 @@ const ItemsPage = (props) => {
     const inputLength = e.target.value.length;
     setSearchValue(e.target.value);
     if (searchText === "Name" && inputLength > 0) {
-      filteredItems = items.filter((item) => item.itemName.includes(e.target.value));
+      filteredItems = items.filter((item) => item.name.includes(e.target.value));
     }
     if (searchText === "Attributes" && inputLength > 0) {
       filteredItems = items.filter((item) => {
         let flag = 0;
-        item.attribList.map((attrib) => {
+        item.attributes.map((attrib) => {
           if (Object.keys(attrib)[0].includes(inputValue)) {
             flag = 1;
           }
@@ -109,7 +109,7 @@ const ItemsPage = (props) => {
     if (searchText === "Values in Attributes" && inputLength > 0) {
       filteredItems = items.filter((item) => {
         let flag = 0;
-        item.attribList.map((attrib) => {
+        item.attributes.map((attrib) => {
           if (Object.values(attrib)[0].includes(inputValue)) {
             flag = 1;
           }
@@ -181,16 +181,16 @@ const ItemsPage = (props) => {
       </Dropdown>
       {searchValue.length === 0
         ? currentItems.map((item) => (
-            <Card key={item._id} style={{ width: "100%" }}>
+            <Card key={item.entryId} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
                   <img style={{ height: "250px", width: "250px" }} src={item.image} alt="" />
                 </div>
                 <div>
-                  <Card.Title>{item.itemName}</Card.Title>
+                  <Card.Title>{item.name}</Card.Title>
                   <Card.Text>{`Description: ${item.description}`}</Card.Text>
                   <ListGroup className="list-group-flush">
-                    {item.attribList.map((attrib, id) =>
+                    {item.attributes.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
                         <ListGroupItem key={id}>{`${
                           Object.keys(attrib)[0]
@@ -201,14 +201,14 @@ const ItemsPage = (props) => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px", marginTop: "15px" }}
-                    to={`/editItem/${item._id}`}
+                    to={`/editItem/${item.entryId}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
                   <Button
                     onClick={() => {
-                      handleDelete(item._id);
+                      handleDelete(item.entryId);
                     }}
                     style={{ marginTop: "15px" }}
                     variant="danger"
@@ -220,16 +220,16 @@ const ItemsPage = (props) => {
             </Card>
           ))
         : currentFilteredItems.map((item) => (
-            <Card key={item._id} style={{ width: "100%" }}>
+            <Card key={item.entryId} style={{ width: "100%" }}>
               <Card.Body style={{ display: "flex" }}>
                 <div style={{ paddingRight: "50px" }}>
                   <img style={{ height: "250px", width: "250px" }} src={item.image} alt="" />
                 </div>
                 <div>
-                  <Card.Title>{item.itemName}</Card.Title>
+                  <Card.Title>{item.name}</Card.Title>
                   <Card.Text>{`Description: ${item.description}`}</Card.Text>
                   <ListGroup className="list-group-flush">
-                    {item.attribList.map((attrib, id) =>
+                    {item.attributes.map((attrib, id) =>
                       Object.values(attrib).map((value) => (
                         <ListGroupItem key={id}>{`${
                           Object.keys(attrib)[0]
@@ -240,16 +240,16 @@ const ItemsPage = (props) => {
                   <Button
                     as={Link}
                     style={{ marginRight: "15px", marginTop: "15px" }}
-                    to={`/editItem/${item._id}`}
+                    to={`/editItem/${item.entryId}`}
                     variant="primary"
                   >
                     Edit
                   </Button>
                   <Button
                     onClick={() => {
-                      handleDelete(item._id);
+                      handleDelete(item.entryId);
                     }}
-                    style={{ marginTop: "15px", marginBottom: "50px" }}
+                    style={{ marginTop: "15px" }}
                     variant="danger"
                   >
                     Delete

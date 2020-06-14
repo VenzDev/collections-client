@@ -17,9 +17,10 @@ import showToast from "../utils/showToast";
 
 const EditItemPage = (props) => {
   const id = props.match.params.id;
-  const { items } = useSelector((state) => state.allItemsReducer);
+  const { items } = useSelector((state) => state.collectionItemsReducer);
   let item = items.filter((_item) => _item.entryId === id);
   item = item[0];
+  console.log(item);
   let strangeList = [];
   const { collections } = useSelector((state) => state.collectionsReducer);
 
