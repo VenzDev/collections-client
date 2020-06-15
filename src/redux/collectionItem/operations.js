@@ -22,7 +22,13 @@ const changeData = (newData) => (dispatch) => {
   }
 };
 
+const sortData = (data) => (dispatch) => {
+  dispatch(actions.fetchCollectionItemsPending());
+  dispatch(actions.fetchCollectionItemsSuccess(data));
+};
+
 export default {
   fetchData,
   changeData,
+  sortData,
 };

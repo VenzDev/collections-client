@@ -17,10 +17,9 @@ import showToast from "../utils/showToast";
 
 const EditItemPage = (props) => {
   const id = props.match.params.id;
-  const { items } = useSelector((state) => state.collectionItemsReducer);
+  const { items } = useSelector((state) => state.allItemsReducer);
   let item = items.filter((_item) => _item.entryId === id);
   item = item[0];
-  console.log(item);
   let strangeList = [];
   const { collections } = useSelector((state) => state.collectionsReducer);
 
@@ -65,7 +64,6 @@ const EditItemPage = (props) => {
       name: name,
       description: desc,
     };
-    console.log(finalItem);
     setLoading(true);
     axios.put(editItemEndpoint, finalItem).then((response) => {
       if (response.status === 200) {

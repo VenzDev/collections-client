@@ -94,10 +94,22 @@ const AllItemsPage = () => {
         filteredList = filteredList.sort((a, b) => (a.name > b.name ? 1 : -1));
       else if (e.target.text === "Item Name Desc")
         filteredList = filteredList.sort((a, b) => (a.name > b.name ? -1 : 1));
+      else if (e.target.text === "Number of attributes Asc")
+        filteredList = filteredList.sort((a, b) =>
+          a.attributes.length > b.attributes.length ? 1 : -1
+        );
+      else if (e.target.text === "Number of attributes Desc")
+        filteredList = filteredList.sort((a, b) =>
+          a.attributes.length > b.attributes.length ? -1 : 1
+        );
     } else {
       if (e.target.text === "Item Name Asc") list = list.sort((a, b) => (a.name > b.name ? 1 : -1));
       else if (e.target.text === "Item Name Desc")
         list = list.sort((a, b) => (a.name > b.name ? -1 : 1));
+      else if (e.target.text === "Number of attributes Asc")
+        list = list.sort((a, b) => (a.attributes.length > b.attributes.length ? 1 : -1));
+      else if (e.target.text === "Number of attributes Desc")
+        list = list.sort((a, b) => (a.attributes.length > b.attributes.length ? -1 : 1));
     }
     if (filteredList.length > 0) currentFilteredItems = filteredList;
     else dispatch(_allItems.sortData(list));
@@ -105,18 +117,22 @@ const AllItemsPage = () => {
   };
 
   const handleSearchInput = (e) => {
+    setCurrentPage(1);
     let filteredItems = [];
-    const inputValue = e.target.value;
+    const inputValue = e.target.value.toLowerCase();
     const inputLength = e.target.value.length;
     setSearchValue(e.target.value);
     if (searchText === "Name" && inputLength > 0) {
-      filteredItems = items.filter((item) => item.name.includes(e.target.value));
+      filteredItems = items.filter((item) => item.name.toLowerCase().includes(inputValue));
+    }
+    if (searchText === "Description" && inputLength > 0) {
+      filteredItems = items.filter((item) => item.description.toLowerCase().includes(inputValue));
     }
     if (searchText === "Attributes" && inputLength > 0) {
       filteredItems = items.filter((item) => {
         let flag = 0;
         item.attributes.map((attrib) => {
-          if (Object.keys(attrib)[0].includes(inputValue)) {
+          if (Object.keys(attrib)[0].toLowerCase().includes(inputValue)) {
             flag = 1;
           }
         });
@@ -127,7 +143,7 @@ const AllItemsPage = () => {
       filteredItems = items.filter((item) => {
         let flag = 0;
         item.attributes.map((attrib) => {
-          if (Object.values(attrib)[0].includes(inputValue)) {
+          if (Object.values(attrib)[0].toLowerCase().includes(inputValue)) {
             flag = 1;
           }
         });
@@ -151,15 +167,36 @@ const AllItemsPage = () => {
         </div>
         <h5 style={{ right: "22%", position: "absolute" }}>
           Items per page
-          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems5}>
+          <span
+            style={
+              itemsPerPage === 5
+                ? { color: "blue", cursor: "pointer" }
+                : { color: "black", cursor: "pointer" }
+            }
+            onClick={handleItems5}
+          >
             {" "}
             5{" "}
           </span>
-          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems10}>
+          <span
+            style={
+              itemsPerPage === 10
+                ? { color: "blue", cursor: "pointer" }
+                : { color: "black", cursor: "pointer" }
+            }
+            onClick={handleItems10}
+          >
             {" "}
             10{" "}
           </span>
-          <span style={{ color: "blue", cursor: "pointer" }} onClick={handleItems20}>
+          <span
+            style={
+              itemsPerPage === 20
+                ? { color: "blue", cursor: "pointer" }
+                : { color: "black", cursor: "pointer" }
+            }
+            onClick={handleItems20}
+          >
             {" "}
             20{" "}
           </span>
@@ -174,6 +211,7 @@ const AllItemsPage = () => {
           id="input-group-dropdown-1"
         >
           <Dropdown.Item>Name</Dropdown.Item>
+          <Dropdown.Item>Description</Dropdown.Item>
           <Dropdown.Item>Attributes</Dropdown.Item>
           <Dropdown.Item>Values in Attributes</Dropdown.Item>
         </DropdownButton>
@@ -193,7 +231,8 @@ const AllItemsPage = () => {
         <Dropdown.Menu onClick={handleSortChange}>
           <Dropdown.Item>Item Name Asc</Dropdown.Item>
           <Dropdown.Item>Item Name Desc</Dropdown.Item>
-          <Dropdown.Item>Created at</Dropdown.Item>
+          <Dropdown.Item>Number of attributes Asc</Dropdown.Item>
+          <Dropdown.Item>Number of attributes Desc</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
       {searchValue.length === 0
